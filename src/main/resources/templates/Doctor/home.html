@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dashboard - SaludSync</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <span class="navbar-brand">SaludSync</span>
+            <a th:href="@{/logout}" class="btn btn-light">
+                Cerrar sesión
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+
+        <!-- Tarjeta de bienvenida con foto a la derecha -->
+        <div class="card shadow p-4 mb-4 d-flex align-items-center">
+            <div class="d-flex align-items-center w-100">
+                <div>
+                    <h4>Bienvenido</h4>
+                    <p><strong>Nombre:</strong> <span th:text="${usuario.nombre}"></span></p>
+                    <p><strong>Correo:</strong> <span th:text="${usuario.correo}"></span></p>
+                </div>
+                
+                <!-- Imagen de perfil a la derecha -->
+                <img th:if="${usuario.imagen != null}"
+                     th:src="@{'/sistema_informacion/uploads/Doctor/' + ${usuario.imagen}}"
+                     class="rounded-circle ms-auto"
+                     alt="Foto de perfil"
+                     style="width:80px; height:80px; object-fit:cover; border:2px solid #007bff;">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow p-3 text-center">
+                    <h5>Citas</h5>
+                    <button class="btn btn-outline-primary">Ver citas</button>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow p-3 text-center">
+                    <h5>Historial Médico</h5>
+                    <button class="btn btn-outline-primary">Ver historial</button>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow p-3 text-center">
+                    <h5>Perfil</h5>
+                    <button class="btn btn-outline-primary">Editar perfil</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

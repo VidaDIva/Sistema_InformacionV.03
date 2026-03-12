@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Seleccionar Rol</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+    background: linear-gradient(135deg,#57a1eb,#00c6ff);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial;
+}
+
+.titulo{
+    text-align:center;
+    color:white;
+    margin-bottom:40px;
+}
+
+.card-rol{
+    border:none;
+    border-radius:15px;
+    transition:0.3s;
+    cursor:pointer;
+    text-align:center;
+    padding:40px 20px;
+}
+
+.card-rol:hover{
+    transform:translateY(-10px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.icono{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2 class="titulo">¿Qué tipo de usuario eres?</h2>
+
+<div class="row justify-content-center g-4">
+
+<!-- PACIENTE -->
+<div class="col-md-3">
+<a th:href="@{/login}" style="text-decoration:none;color:black;">
+<div class="card card-rol">
+
+<div class="icono">👤</div>
+
+<h4>Paciente</h4>
+
+<p class="text-muted">Ver tu información médica</p>
+
+</div>
+</a>
+</div>
+
+<!-- MEDICO -->
+<div class="col-md-3">
+<a th:href="@{/login}" style="text-decoration:none;color:black;">
+<div class="card card-rol">
+
+<div class="icono">🩺</div>
+
+<h4>Médico</h4>
+
+<p class="text-muted">Gestionar pacientes</p>
+
+</div>
+</a>
+</div>
+
+<!-- ADMIN -->
+<div class="col-md-3">
+<a th:href="@{/login}" style="text-decoration:none;color:black;">
+<div class="card card-rol">
+
+<div class="icono">⚙️</div>
+
+<h4>Administrador</h4>
+
+<p class="text-muted">Control del sistema</p>
+
+</div>
+</a>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

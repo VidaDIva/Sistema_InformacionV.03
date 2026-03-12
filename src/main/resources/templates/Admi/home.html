@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Panel Administrador - SaludSync</title>
+    <meta charset="UTF-8">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+        <span class="navbar-brand">SaludSync - Administrador</span>
+
+        <div class="d-flex">
+
+            <span class="text-white me-3">
+                <strong th:text="${usuario.nombre}"></strong>
+            </span>
+
+            <a th:href="@{/logout}" class="btn btn-outline-light">
+                Cerrar sesión
+            </a>
+
+        </div>
+
+    </div>
+</nav>
+
+
+<div class="container mt-4">
+
+    <!-- INFORMACION ADMIN -->
+    <div class="card shadow p-4 mb-4">
+    
+            <h4>Información del Administrador</h4>
+            <div>
+                
+            </div>
+             <img th:if="${usuario.imagen != null}"
+                     th:src="@{'/sistema_informacion/uploads/Doctor/' + ${usuario.imagen}}"
+                     class="rounded-circle ms-auto"
+                     alt="Foto de perfil"
+                     style="width:80px; height:80px; object-fit:cover; border:2px solid #007bff;">
+
+            <p>
+                <strong>Nombre:</strong>
+                <span th:text="${usuario.nombre}"></span>
+            </p>
+            <p>
+                <strong>Correo:</strong>
+                <span th:text="${usuario.correo}"></span>
+            </p>
+
+        <!-- Imagen de perfil a la derecha -->
+               
+    </div>
+
+
+    <!-- OPCIONES DEL ADMIN -->
+    <div class="row g-4">
+
+        <!-- USUARIOS -->
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+
+                <h5>Usuarios</h5>
+
+                <p>Administrar usuarios del sistema</p>
+
+                <a th:href="@{/admin/usuarios}" class="btn btn-primary">
+                    Gestionar
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- DOCTORES -->
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+
+                <h5>Doctores</h5>
+
+                <p>Administrar médicos</p>
+
+                <a th:href="@{/admin/doctores}" class="btn btn-success">
+                    Gestionar
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- PACIENTES -->
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+
+                <h5>Pacientes</h5>
+
+                <p>Ver pacientes registrados</p>
+
+                <a th:href="@{/admin/pacientes}" class="btn btn-info">
+                    Ver pacientes
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- CITAS -->
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+
+                <h5>Citas Médicas</h5>
+
+                <p>Gestionar citas del sistema</p>
+
+                <a th:href="@{/admin/citas}" class="btn btn-warning">
+                    Ver citas
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- REPORTES -->
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+
+                <h5>Reportes</h5>
+
+                <p>Estadísticas del sistema</p>
+
+                <a th:href="@{/admin/reportes}" class="btn btn-secondary">
+                    Ver reportes
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- CONFIGURACION -->
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+
+                <h5>Configuración</h5>
+
+                <p>Ajustes del sistema</p>
+
+                <a th:href="@{/admin/configuracion}" class="btn btn-dark">
+                    Configurar
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
