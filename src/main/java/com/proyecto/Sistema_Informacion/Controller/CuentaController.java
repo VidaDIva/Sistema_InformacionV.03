@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.proyecto.Sistema_Informacion.Model.entity.Cargo;
 import com.proyecto.Sistema_Informacion.Model.entity.Crear;
@@ -45,26 +46,33 @@ public class CuentaController {
 
     @PostMapping("/registro-datos")
     public String guardarDatos(@ModelAttribute Crear crear,
-            @RequestParam("file") org.springframework.web.multipart.MultipartFile file,
+            @RequestParam("file") MultipartFile file,
             HttpSession session) throws IOException {
 
-        if (!file.isEmpty()) {
-            String nombreArchivo = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-            Path carpeta = Paths.get("uploads/Doctor/");
-            if (!Files.exists(carpeta)) {
-                Files.createDirectories(carpeta);
-            }
-            Path ruta = carpeta.resolve(nombreArchivo);
-            Files.write(ruta, file.getBytes());
-            crear.setImagen(nombreArchivo);
-        }
-
-        // 🔹 Obtener el cargo completo desde la base de datos
+        // Obtener el cargo real desde la base de datos
         Long idCargo = crear.getCargo().getId();
-
         Cargo cargoReal = cargoService.buscarPorId(idCargo);
 
         crear.setCargo(cargoReal);
+
+        if (!file.isEmpty()) {
+
+            String nombreArchivo = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+            // 🔹 Obtener nombre del cargo
+            String cargoNombre = cargoReal.getCargo().toLowerCase();
+
+            Path carpeta = Paths.get("uploads/" + cargoNombre);
+
+            if (!Files.exists(carpeta)) {
+                Files.createDirectories(carpeta);
+            }
+
+            Path ruta = carpeta.resolve(nombreArchivo);
+            Files.write(ruta, file.getBytes());
+
+            crear.setImagen(nombreArchivo);
+        }
 
         session.setAttribute("usuarioTemp", crear);
 
