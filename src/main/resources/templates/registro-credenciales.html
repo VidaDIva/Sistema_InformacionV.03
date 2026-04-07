@@ -7,131 +7,217 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #E0F2F1; /* Verde menta de la marca */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .data-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 77, 64, 0.1);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+        }
+
+        .brand-text {
+            color: #00796b;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #5bc0be;
+            box-shadow: 0 0 0 0.25rem rgba(91, 192, 190, 0.2);
+            outline: none;
+        }
+
+        /* Botón principal turquesa */
+        .btn-primary {
+            background-color: #5bc0be;
+            border: none;
+            padding: 14px;
+            font-weight: 700;
+            border-radius: 10px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #4a9e9c;
+            transform: translateY(-1px);
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+        }
+
+        .security-hint {
+            font-size: 0.75rem;
+            color: #6c757d;
+            display: block;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        #texto2 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .input-group-text {
+            background-color: transparent;
+            border-radius: 0 10px 10px 0 !important;
+            cursor: pointer;
+        }
+        
+        .input-group > .form-control {
+            border-radius: 10px 0 0 10px !important;
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-    <div class="container mt-5">
+    <div class="data-card shadow">
+        <div class="text-center mb-4">
+            <h2 class="brand-text">SaludSync</h2>
+            <h4 class="text-secondary fw-semibold">Credenciales de Acceso</h4>
+            <p class="text-muted small">Configura tu cuenta para empezar a usar el sistema</p>
+        </div>
 
-        <div class="card shadow p-4 mx-auto" style="max-width: 500px;">
+        <form th:action="@{/cuenta/enviarCodigo}" method="post">
 
-            <h3 class="text-center mb-4">Credenciales de Acceso</h3>
-
-            <form th:action="@{/cuenta/enviarCodigo}" method="post">
-
-                <div class="mb-3">
-                    <label class="form-label">Correo electrónico</label>
-
-                    <input type="email" name="correo" class="form-control" placeholder="ejemplo@gmail.com" required>
-
+            <div class="mb-3">
+                <label class="form-label">Correo electrónico</label>
+                <div class="input-group">
+                    <span class="input-group-text border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+                    <input type="email" name="correo" class="form-control border-start-0" placeholder="ejemplo@gmail.com" required>
                 </div>
-
-                <div class="mb-3">
-
-                    <label class="form-label">Contraseña</label>
-
-                    <div class="input-group">
-
-                        <input type="password" id="contrasena" name="contrasena" class="form-control"
-                            onkeyup="medirSeguridad('contrasena','barra2','texto2')" required>
-
-                        <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('contrasena')">
-                            👁
-                        </button>
-
-                    </div>
-
-                    <span>
-                        Consejo: usa al menos 8 caracteres, números, mayúsculas y símbolos.
-                    </span>
-
-                    <div class="progress mt-2">
-                        <div id="barra2" class="progress-bar" style="width:0%"></div>
-                    </div>
-
-                    <span id="texto2"></span>
-
-                </div>
-
-                <div class="mb-3">
-
-                    <label class="form-label">Confirmar contraseña</label>
-
-                    <div class="input-group">
-
-                        <input type="password" id="confirmar" name="confirmar" class="form-control" required>
-
-                        <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('confirmar')">
-                            👁
-                        </button>
-
-                    </div>
-
-                </div>
-
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">
-                        Enviar código de verificación
-                    </button>
-                </div>
-
-            </form>
-
-            <div class="text-danger text-center mt-3" th:text="${error}"></div>
-
-            <div class="text-center mt-3">
-
-                <a th:href="@{/cuenta/registro}" class="btn btn-outline-secondary w-100">
-                    Volver a datos personales
-                </a>
-
             </div>
 
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <div class="input-group shadow-sm">
+                    <input type="password" id="contrasena" name="contrasena" class="form-control" 
+                           onkeyup="medirSeguridad('contrasena','barra2','texto2')" placeholder="Crea una clave segura" required>
+                    <button type="button" class="btn btn-outline-secondary border-start-0" onclick="togglePassword('contrasena')">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+                
+                <small class="security-hint mt-2">
+                    <i class="bi bi-shield-check"></i> Usa al menos 8 caracteres, números, mayúsculas y símbolos.
+                </small>
+
+                <div class="progress mt-2">
+                    <div id="barra2" class="progress-bar" role="progressbar" style="width:0%"></div>
+                </div>
+                <span id="texto2" class="text-muted">Sin contraseña</span>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Confirmar contraseña</label>
+                <div class="input-group shadow-sm">
+                    <input type="password" id="confirmar" name="confirmar" class="form-control" placeholder="Repite tu contraseña" required>
+                    <button type="button" class="btn btn-outline-secondary border-start-0" onclick="togglePassword('confirmar')">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary text-white shadow-sm">
+                    Enviar código de verificación
+                </button>
+                
+                <div class="text-danger text-center small mt-2" th:text="${error}"></div>
+
+                <a th:href="@{/cuenta/registro}" class="btn btn-link text-muted btn-sm text-decoration-none text-center mt-2">
+                    <i class="bi bi-arrow-left"></i> Volver a datos personales
+                </a>
+            </div>
+
+        </form>
     </div>
 
     <script>
-
         function togglePassword(id) {
-            const input = document.getElementById(id)
-            input.type = input.type === "password" ? "text" : "password"
+            const input = document.getElementById(id);
+            const icon = event.currentTarget.querySelector('i');
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.replace('bi-eye', 'bi-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.replace('bi-eye-slash', 'bi-eye');
+            }
         }
 
         function medirSeguridad(inputId, barraId, textoId) {
+            const pass = document.getElementById(inputId).value;
+            let fuerza = 0;
 
-            const pass = document.getElementById(inputId).value
-            let fuerza = 0
+            if (pass.length >= 8) fuerza++;
+            if (/[A-Z]/.test(pass)) fuerza++;
+            if (/[0-9]/.test(pass)) fuerza++;
+            if (/[^A-Za-z0-9]/.test(pass)) fuerza++;
 
-            if (pass.length >= 8) fuerza++
-            if (/[A-Z]/.test(pass)) fuerza++
-            if (/[0-9]/.test(pass)) fuerza++
-            if (/[^A-Za-z0-9]/.test(pass)) fuerza++
+            const barra = document.getElementById(barraId);
+            const texto = document.getElementById(textoId);
 
-            const barra = document.getElementById(barraId)
-            const texto = document.getElementById(textoId)
+            let porcentaje = (fuerza / 4) * 100;
+            barra.style.width = porcentaje + "%";
 
-            let porcentaje = (fuerza / 4) * 100
-            barra.style.width = porcentaje + "%"
-
-            if (fuerza <= 1) {
-                barra.className = "progress-bar bg-danger"
-                texto.innerText = "Contraseña débil"
+            if (pass.length === 0) {
+                barra.className = "progress-bar";
+                texto.innerText = "Sin contraseña";
+                texto.className = "text-muted";
+            } else if (fuerza <= 1) {
+                barra.className = "progress-bar bg-danger";
+                texto.innerText = "Contraseña débil";
+                texto.className = "text-danger";
+            } else if (fuerza <= 3) {
+                barra.className = "progress-bar bg-warning";
+                texto.innerText = "Contraseña media";
+                texto.className = "text-warning";
+            } else {
+                barra.className = "progress-bar bg-success";
+                texto.innerText = "Contraseña fuerte";
+                texto.className = "text-success";
             }
-            else if (fuerza <= 3) {
-                barra.className = "progress-bar bg-warning"
-                texto.innerText = "Contraseña media"
-            }
-            else {
-                barra.className = "progress-bar bg-success"
-                texto.innerText = "Contraseña fuerte"
-            }
-
         }
-
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>
