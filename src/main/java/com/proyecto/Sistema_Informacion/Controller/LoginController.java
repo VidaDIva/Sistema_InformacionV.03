@@ -79,6 +79,17 @@ public String procesarLogin(@RequestParam String correo,
         return "seleccionar-rol";
     }
 
+    @GetMapping("/politicas")
+    public String mostrarPoliticas() {
+        return "politicas"; // Esto busca el archivo politicas.html en src/main/resources/templates
+    }
+
+    @GetMapping("/ver-pqrs")
+    public String pqrs() {
+        return "redirect:/pqrs/formulario";
+    }
+
+
     // ===============================
     // MOSTRAR RECUPERAR CONTRASEÑA
     // ===============================
