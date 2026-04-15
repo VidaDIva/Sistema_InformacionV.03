@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Nuevo Insumo - SaludSync</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f9f8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-insumo {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 77, 64, 0.08);
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        .card-header-accent {
+            background: linear-gradient(90deg, #00796b, #5bc0be);
+            height: 8px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #263238;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #e0f2f1;
+            padding: 10px 15px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #5bc0be;
+            box-shadow: 0 0 0 0.25rem rgba(91, 192, 190, 0.1);
+        }
+
+        .btn-save {
+            background-color: #00796b;
+            color: white;
+            border-radius: 10px;
+            padding: 10px 30px;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-save:hover {
+            background-color: #004d40;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            background-color: #f8f9fa;
+            color: #666;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-home {
+            background-color: #e0f2f1;
+            color: #00796b;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-home:hover {
+            background-color: #00796b;
+            color: white;
+        }
+
+        .title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                
+                <div class="card card-insumo">
+                    <div class="card-header-accent"></div>
+                    <div class="p-5">
+                        
+                        <div class="title-container">
+                            <h4 class="fw-bold m-0" style="color: #004d40;">
+                                <i class="bi bi-box-seam me-2 text-primary" style="color: #5bc0be !important;"></i> Registrar Insumo
+                            </h4>
+                            <a th:href="@{/admin/home}" class="btn-home shadow-sm" title="Ir al Inicio">
+                                <i class="bi bi-house-door-fill"></i>
+                            </a>
+                        </div>
+
+                        <form th:action="@{/admin/insumos/guardar}" th:object="${insumo}" method="post">
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Médico Responsable</label>
+                                    <select th:field="*{medico.id}" class="form-select" required>
+                                        <option value="">Seleccione Médico</option>
+                                        <option th:each="m : ${medicos}"
+                                                th:value="${m.id}"
+                                                th:text="${m.nombre + ' ' + m.apellido }">
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Tipo de Insumo</label>
+                                    <select th:field="*{nombreInsumo}" class="form-select" required>
+                                        <option value="">Seleccione un insumo</option>
+                                        <option value="Guantes">Guantes</option>
+                                        <option value="Mascarillas">Mascarillas</option>
+                                        <option value="Jeringas">Jeringas</option>
+                                        <option value="Gasas">Gasas</option>
+                                        <option value="Alcohol">Alcohol</option>
+                                        <option value="Suero">Suero</option>
+                                        <option value="Termómetro">Termómetro</option>
+                                        <option value="Tensiómetro">Tensiómetro</option>
+                                        <option value="Oxímetro">Oxímetro</option>
+                                        <option value="Bisturí">Bisturí</option>
+                                        <option value="Venda">Venda</option>
+                                        <option value="Algodón">Algodón</option>
+                                        <option value="Desinfectante">Desinfectante</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Cantidad</label>
+                                    <input type="number" th:field="*{cantidad}" class="form-control" placeholder="0" required>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Fecha de Entrega</label>
+                                    <input type="date" th:field="*{fechaEntrega}" class="form-control" required>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Área Destino</label>
+                                    <select th:field="*{area}" class="form-select">
+                                        <option value="">Seleccione área</option>
+                                        <option value="Urgencias">Urgencias</option>
+                                        <option value="Consulta General">Consulta General</option>
+                                        <option value="Hospitalización">Hospitalización</option>
+                                        <option value="Laboratorio">Laboratorio</option>
+                                        <option value="Radiología">Radiología</option>
+                                        <option value="Farmacia">Farmacia</option>
+                                        <option value="UCI">UCI</option>
+                                        <option value="Pediatría">Pediatría</option>
+                                        <option value="Ginecología">Ginecología</option>
+                                        <option value="Cirugía">Cirugía</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-12 mb-4">
+                                    <label class="form-label">Estado Inicial</label>
+                                    <select th:field="*{estado}" class="form-select">
+                                        <option value="ENTREGADO">ENTREGADO</option>
+                                        <option value="USADO">USADO</option>
+                                        <option value="DESECHADO">DESECHADO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <a th:href="@{/admin/insumos}" class="btn-back">
+                                    <i class="bi bi-arrow-left me-1"></i> Cancelar
+                                </a>
+                                <button type="submit" class="btn-save shadow-sm">
+                                    <i class="bi bi-check-lg me-1"></i> Guardar Registro
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
