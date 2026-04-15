@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Responder PQRS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f9f8;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #263238 !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 77, 64, 0.1);
+        }
+
+        .btn-success {
+            background-color: #5bc0be;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #4a9e9c;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/admin/home}">
+                <i class="bi bi-shield-lock-fill me-2"></i>
+                <span>SaludSync - Admin</span>
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <span class="text-white-50 me-3 d-none d-md-block">
+                    Admin
+                </span>
+                <a th:href="@{/logout}" class="btn btn-outline-light btn-sm px-3">
+                    <i class="bi bi-box-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="card p-4">
+            <div>
+                <h3 class="brand-text">SaludSync</h3>
+                <p class="text-muted mb-0">Responder PQRS</p>
+                <br>
+            </div>
+            <form th:action="@{/pqrs/responder/{id}(id=${pqrs.id})}" method="post">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">ID PQRS</label>
+                        <input type="text" class="form-control" th:value="${pqrs.id}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Tipo Usuario</label>
+                        <input type="text" class="form-control" th:value="${pqrs.tipoUsuario}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" th:value="${pqrs.nombre}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Tipo Documento</label>
+                        <input type="text" class="form-control" th:value="${pqrs.tipoDocumento}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Número Documento</label>
+                        <input type="text" class="form-control" th:value="${pqrs.numeroDocumento}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" th:value="${pqrs.telefono}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Correo</label>
+                        <input type="text" class="form-control" th:value="${pqrs.correo}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Área Hospital</label>
+                        <input type="text" class="form-control" th:value="${pqrs.areaHospital}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Fecha Incidente</label>
+                        <input type="text" class="form-control" th:value="${pqrs.fechaIncidente}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Tipo Solicitud</label>
+                        <input type="text" class="form-control" th:value="${pqrs.tipoSolicitud}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Estado</label>
+                        <input type="text" class="form-control" th:value="${pqrs.estado}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nivel Gravedad</label>
+                        <input type="text" class="form-control" th:value="${pqrs.nivelGravedad}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Ubicación</label>
+                        <input type="text" class="form-control" th:value="${pqrs.ubicacion}" readonly>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Descripción</label>
+                        <textarea class="form-control" rows="3" readonly th:text="${pqrs.descripcion}"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Respuesta</label>
+                        <textarea class="form-control" name="respuesta" rows="4" required></textarea>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success">Enviar Respuesta</button>
+                    <a th:href="@{/pqrs/lista}" class="btn btn-secondary ms-2">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
