@@ -10,5 +10,6 @@ import com.proyecto.Sistema_Informacion.Model.entity.ChatMensaje;
 @Repository
 public interface ChatDAO extends JpaRepository<ChatMensaje, Long> {
 
+    
     List<ChatMensaje> findByMedicoIdOrderByFechaAsc(Long medicoId);
 }

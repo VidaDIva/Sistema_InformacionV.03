@@ -85,8 +85,5 @@ public class DoctorController {
             return "Doctor/insumo-lista";
         }
 
-        @GetMapping("/doctor/chat")
-        public String chat() {
-            return "Doctor/chat";
-        }
+      
 }
