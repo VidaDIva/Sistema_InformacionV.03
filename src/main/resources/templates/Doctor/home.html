@@ -175,6 +175,41 @@
             <span class="navbar-brand">
                 <i class="bi bi-hospital me-2"></i>SaludSync - Panel Médico
             </span>
+            <div class="dropdown position-relative me-3">
+
+            <!-- 🔔 CAMPANA -->
+            <i class="bi bi-bell fs-5 dropdown-toggle"
+            data-bs-toggle="dropdown"
+            style="cursor:pointer;"></i>
+
+            <!-- 🔴 BURBUJA -->
+            <span th:if="${totalNotificaciones > 0}"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <span th:text="${totalNotificaciones}"></span>
+            </span>
+
+            <!-- 📋 MENÚ -->
+            <ul class="dropdown-menu dropdown-menu-end p-2" style="width: 300px;">
+
+                <li th:if="${vencidos > 0}" class="text-danger">
+                    ❌ Tienes <span th:text="${vencidos}"></span> exámenes vencidos
+                </li>
+
+                <li th:if="${vacunasPendientes > 0}" class="text-warning">
+                    💉 Vacunas pendientes
+                </li>
+
+                <li th:if="${insumosBajos > 0}" class="text-warning">
+                    📦 Insumos bajos (<span th:text="${insumosBajos}"></span>)
+                </li>
+
+                <li th:if="${totalNotificaciones == 0}" class="text-success">
+                    ✅ Todo en orden
+                </li>
+
+            </ul>
+
+        </div>
             <div class="ms-auto">
                 <a th:href="@{/logout}" class="btn btn-light btn-sm fw-bold px-3 shadow-sm" style="border-radius: 8px; color: #004d40;">
                     <i class="bi bi-box-arrow-right me-1"></i> Cerrar sesión
@@ -246,52 +281,87 @@
             <div class="row g-4">
 
                 <!-- EXÁMENES MÉDICOS -->
-                <div class="col-md-4">
-                    <div class="card admin-card shadow-sm text-center">
-                        <div class="icon-box">
-                            <i class="bi bi-clipboard2-pulse"></i>
-                        </div>
-                        <h5 class="fw-bold">Exámenes Médicos</h5>
-                        <p class="text-muted small mb-4">
-                            Gestiona tus exámenes anuales y controla su vigencia.
-                        </p>
-                        <a th:href="@{/doctor/examenes}" class="btn btn-outline-primary w-100">
-                            Ver exámenes
-                        </a>
-                    </div>
-                </div>
+            <div class="col-md-4 position-relative">
+                <div class="card admin-card shadow-sm text-center">
 
-                <!-- VACUNAS -->
-                <div class="col-md-4">
-                    <div class="card admin-card shadow-sm text-center">
-                        <div class="icon-box">
-                            <i class="bi bi-shield-plus"></i>
-                        </div>
-                        <h5 class="fw-bold">Vacunas</h5>
-                        <p class="text-muted small mb-4">
-                            Controla tus vacunas y fechas de refuerzo.
-                        </p>
-                        <a th:href="@{/doctor/vacunas}" class="btn btn-outline-primary w-100">
-                            Ver vacunas
-                        </a>
-                    </div>
-                </div>
+                    <!-- 🔴 NOTIFICACIÓN EXÁMENES -->
+                    <span th:if="${vencidos > 0}"
+                        class="badge bg-danger position-absolute top-0 end-0 m-2 rounded-circle"
+                        style="width: 25px; height: 25px; display:flex; align-items:center; justify-content:center;">
+                        <span th:text="${vencidos}"></span>
+                    </span>
 
-                <!-- INSUMOS -->
-                <div class="col-md-4">
-                    <div class="card admin-card shadow-sm text-center">
-                        <div class="icon-box">
-                            <i class="bi bi-box-seam"></i>
-                        </div>
-                        <h5 class="fw-bold">Insumos Médicos</h5>
-                        <p class="text-muted small mb-4">
-                            Registra y controla los insumos utilizados en tu jornada.
-                        </p>
-                        <a th:href="@{/doctor/insumos}" class="btn btn-outline-primary w-100">
-                            Ver insumos
-                        </a>
+                    <div class="icon-box">
+                        <i class="bi bi-clipboard2-pulse"></i>
                     </div>
+
+                    <h5 class="fw-bold">Exámenes Médicos</h5>
+
+                    <p class="text-muted small mb-4">
+                        Gestiona tus exámenes anuales y controla su vigencia.
+                    </p>
+
+                    <a th:href="@{/doctor/examenes}" class="btn btn-outline-primary w-100">
+                        Ver exámenes
+                    </a>
                 </div>
+            </div>
+
+
+            <!-- VACUNAS -->
+            <div class="col-md-4 position-relative">
+                <div class="card admin-card shadow-sm text-center">
+
+                    <!-- 🟡 NOTIFICACIÓN VACUNAS -->
+                    <span th:if="${vacunasPendientes > 0}"
+                        class="badge bg-warning position-absolute top-0 end-0 m-2 rounded-circle"
+                        style="width: 25px; height: 25px; display:flex; align-items:center; justify-content:center;">
+                        !
+                    </span>
+
+                    <div class="icon-box">
+                        <i class="bi bi-shield-plus"></i>
+                    </div>
+
+                    <h5 class="fw-bold">Vacunas</h5>
+
+                    <p class="text-muted small mb-4">
+                        Controla tus vacunas y fechas de refuerzo.
+                    </p>
+
+                    <a th:href="@{/doctor/vacunas}" class="btn btn-outline-primary w-100">
+                        Ver vacunas
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- INSUMOS -->
+            <div class="col-md-4 position-relative">
+                <div class="card admin-card shadow-sm text-center">
+
+                    <!-- 🟠 NOTIFICACIÓN INSUMOS -->
+                    <span th:if="${insumosBajos > 0}"
+                        class="badge bg-warning position-absolute top-0 end-0 m-2 rounded-circle"
+                        style="width: 25px; height: 25px; display:flex; align-items:center; justify-content:center;">
+                        <span th:text="${insumosBajos}"></span>
+                    </span>
+
+                    <div class="icon-box">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+
+                    <h5 class="fw-bold">Insumos Médicos</h5>
+
+                    <p class="text-muted small mb-4">
+                        Registra y controla los insumos utilizados en tu jornada.
+                    </p>
+
+                    <a th:href="@{/doctor/insumos}" class="btn btn-outline-primary w-100">
+                        Ver insumos
+                    </a>
+                </div>
+            </div>
 
             </div>
         </div>
