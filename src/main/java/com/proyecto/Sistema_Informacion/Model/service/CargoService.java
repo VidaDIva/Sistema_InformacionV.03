@@ -9,4 +9,5 @@ public interface CargoService {
     Cargo buscarPorId(Long id);
     Cargo guardar(Cargo cargo);
     void eliminar(Long id);
+    
 }

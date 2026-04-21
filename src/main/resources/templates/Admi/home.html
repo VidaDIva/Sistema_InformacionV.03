@@ -119,6 +119,7 @@
                 <span class="text-white-50 me-3 d-none d-md-block">
                     Admin: <strong class="text-white" th:text="${usuario.nombre}"></strong>
                 </span>
+               
                 <a th:href="@{/logout}" class="btn btn-outline-light btn-sm px-3">
                     <i class="bi bi-box-arrow-right"></i>
                 </a>
@@ -156,14 +157,6 @@
 
         <div class="row g-4 mb-5">
 
-            <div class="col-md-3 col-sm-6">
-                <div class="card option-card shadow-sm text-center">
-                    <div class="icon-box"><i class="bi bi-people"></i></div>
-                    <h6 class="fw-bold">Usuarios</h6>
-                    <p class="text-muted small mb-3">Accesos generales</p>
-                    <a th:href="@{/admin/usuarios}" class="btn btn-outline-dark btn-manage">Gestionar</a>
-                </div>
-            </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="card option-card shadow-sm text-center">
@@ -219,9 +212,9 @@
                 <div class="card option-card shadow-sm text-center">
                     <div class="icon-box" style="background-color: #fafafa; color: #455a64;"><i
                             class="bi bi-sliders"></i></div>
-                    <h6 class="fw-bold">Ajustes</h6>
-                    <p class="text-muted small mb-3">Sistema y variables</p>
-                    <a th:href="@{/admin/configuracion}" class="btn btn-dark btn-manage">Configurar</a>
+                    <h6 class="fw-bold">Descarga de Datos</h6>
+                    <p class="text-muted small mb-3">Informes</p>
+                    <a th:href="@{/admin/backup}" class="btn btn-outline-dark btn-manage">Descargar Backu</a>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">

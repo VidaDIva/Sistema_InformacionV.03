@@ -3,8 +3,11 @@ package com.proyecto.Sistema_Informacion.Controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.proyecto.Sistema_Informacion.Model.entity.Crear;
+import com.proyecto.Sistema_Informacion.Model.enums.EstadoCita;
+import com.proyecto.Sistema_Informacion.Model.service.CitaService;
 import com.proyecto.Sistema_Informacion.Model.service.ExamenMedicoService;
 import com.proyecto.Sistema_Informacion.Model.service.RegistroInsumoService;
 import com.proyecto.Sistema_Informacion.Model.service.VacunaService;
@@ -17,16 +20,17 @@ public class DoctorController {
      private final ExamenMedicoService examenService;
     private final VacunaService vacunaService;
     private final RegistroInsumoService insumoService;
+    private final CitaService citaService;
     
 
     
-   
+
     public DoctorController(ExamenMedicoService examenService, VacunaService vacunaService,
-            RegistroInsumoService insumoService) {
+            RegistroInsumoService insumoService, CitaService citaService) {
         this.examenService = examenService;
         this.vacunaService = vacunaService;
         this.insumoService = insumoService;
-        
+        this.citaService = citaService;
     }
 
     @GetMapping("/doctor/home")
@@ -66,6 +70,20 @@ public class DoctorController {
         model.addAttribute("insumosBajos", insumosBajos);
 
         return "Doctor/home";
+    }
+
+    @GetMapping("/doctor/citas")
+    public String verCitasDoctor(Model model, HttpSession session) {
+
+        Crear doctor = (Crear) session.getAttribute("usuario");
+
+        if (doctor == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("citas", citaService.citasPorDoctor(doctor.getId()));
+
+        return "Doctor/doctor-citas";
     }
     @GetMapping("/doctor/examenes")
     public String verExamenesDoctor(Model model, HttpSession session) {
@@ -140,5 +158,20 @@ public class DoctorController {
         return "doctor/insumo-lista";
     }
 
+    @GetMapping("/doctor/cita/cancelar/{id}")
+    public String cancelarCita(@PathVariable Long id) {
+
+        citaService.actualizarEstado(id, EstadoCita.CANCELADA);
+
+        return "redirect:/doctor/citas";
+    }
+
+    @GetMapping("/doctor/cita/confirmar/{id}")
+    public String confirmarCita(@PathVariable Long id) {
+
+        citaService.actualizarEstado(id, EstadoCita.CONFIRMADA);
+
+        return "redirect:/doctor/citas";
+}
       
 }

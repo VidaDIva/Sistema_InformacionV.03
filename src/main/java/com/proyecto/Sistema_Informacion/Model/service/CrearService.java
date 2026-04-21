@@ -19,6 +19,9 @@ public interface CrearService {
     Crear buscarPorCorreo(String correo);
 
     List<Crear>listarMedicos();
+
+    List<Crear>listarPacientes();
+
     
 
 }

@@ -68,4 +68,16 @@ public class CrearServiceImlp implements CrearService {
 
         return crearDAO.findByCargo(cargoMedico);
     }
+
+    @Override
+    public List<Crear> listarPacientes() {
+
+        Cargo cargoPaciente = cargoService.listar()
+            .stream()
+            .filter(c -> c.getCargo().equalsIgnoreCase("PACIENTE"))
+            .findFirst()
+            .orElse(null);
+
+        return crearDAO.findByCargo(cargoPaciente);
+    }
 }

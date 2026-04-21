@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Mis Citas - SaludSync</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --primary-dark: #004d40;
+            --accent-teal: #5bc0be;
+            --bg-light: #f4f9f8;
+            --status-pending: #ff9800;
+            --status-confirmed: #2e7d32;
+            --status-canceled: #d32f2f;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            min-height: 100vh;
+        }
+
+        /* Navbar Médica */
+        .navbar {
+            background-color: var(--primary-dark) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+
+        .card-main {
+            background: white;
+            border-radius: 20px;
+            border: none;
+            border-left: 8px solid var(--accent-teal);
+            box-shadow: 0 10px 30px rgba(0, 77, 64, 0.08);
+        }
+
+        /* Tabla Estilizada */
+        .table {
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .table thead th {
+            background-color: transparent;
+            color: var(--primary-dark);
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .table tbody tr {
+            background-color: white;
+            transition: all 0.3s;
+        }
+
+        .table tbody tr:hover {
+            transform: scale(1.01);
+            background-color: #f0f7f7;
+        }
+
+        .table td {
+            border: none;
+            padding: 20px 15px;
+            color: #444;
+        }
+
+        /* Badges de Estado */
+        .badge-status {
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+        }
+
+        .badge-pendiente { background-color: #fff3e0; color: var(--status-pending); border: 1px solid var(--status-pending); }
+        .badge-confirmada { background-color: #e8f5e9; color: var(--status-confirmed); border: 1px solid var(--status-confirmed); }
+        .badge-cancelada { background-color: #ffebee; color: var(--status-canceled); border: 1px solid var(--status-canceled); }
+
+        .section-title {
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .btn-back {
+            border-radius: 10px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            border: 2px solid #e0f2f1;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            border-color: var(--primary-dark);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container">
+            <span class="navbar-brand">
+                <i class="bi bi-hospital me-2"></i>SaludSync - Panel Médico
+            </span>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        
+        <div class="card card-main p-4 mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="section-title mb-1">
+                        <i class="bi bi-calendar-check me-2"></i>Agenda de Citas
+                    </h2>
+                    <p class="text-muted small">Gestión de pacientes programados</p>
+                </div>
+                <a href="/doctor/home" class="btn btn-back px-4">
+                    <i class="bi bi-arrow-left me-2"></i>Volver al Inicio
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table text-center align-middle">
+                    <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>Fecha de Cita</th>
+                            <th>Hora</th>
+                            <th>Motivo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="cita : ${citas}" class="shadow-sm rounded">
+                            <td class="fw-bold text-dark">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-person text-teal" style="color: var(--accent-teal);"></i>
+                                    </div>
+                                    <span th:text="${cita.paciente.nombre}">Juan Pérez</span>
+                                </div>
+                            </td>
+                            <td>
+                                <i class="bi bi-calendar3 me-1 text-muted"></i>
+                                <span th:text="${cita.fecha}">2026-04-20</span>
+                            </td>
+                            <td>
+                                <i class="bi bi-clock me-1 text-muted"></i>
+                                <span th:text="${cita.hora}">10:00</span>
+                            </td>
+                            <td class="small text-muted" th:text="${cita.motivo}">Consulta general</td>
+
+                            <td>
+                                <span th:if="${cita.estado.name() == 'PENDIENTE'}" class="badge-status badge-pendiente">
+                                    <i class="bi bi-hourglass-split me-1"></i> Pendiente
+                                </span>
+
+                                <span th:if="${cita.estado.name() == 'CONFIRMADA'}" class="badge-status badge-confirmada">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Confirmada
+                                </span>
+
+                                <span th:if="${cita.estado.name() == 'CANCELADA'}" class="badge-status badge-cancelada">
+                                    <i class="bi bi-x-circle-fill me-1"></i> Cancelada
+                                </span>
+                            </td>
+                            <td>
+                                <div th:if="${cita.estado.name() == 'PENDIENTE'}">
+                                    <a th:href="@{/doctor/cita/confirmar/{id}(id=${cita.id})}" 
+                                    class="btn btn-success btn-sm me-1">
+                                        <i class="bi bi-check"></i>
+                                    </a>
+
+                                    <a th:href="@{/doctor/cita/cancelar/{id}(id=${cita.id})}" 
+                                    class="btn btn-danger btn-sm">
+                                        <i class="bi bi-x"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(citas)}">
+                            <td colspan="6" class="py-5 text-muted">
+                                <i class="bi bi-calendar-x fs-2 d-block mb-2"></i>
+                                No hay pacientes programados para mostrar.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="text-center py-4 text-muted">
+            <small>© 2026 SaludSync - Profesionalismo en Salud</small>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

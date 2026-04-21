@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctores - SaludSync</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            background-color: #f4f9f8;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card-main {
+            background: white;
+            border-radius: 20px;
+            border-left: 8px solid #5bc0be;
+            box-shadow: 0 10px 30px rgba(0, 77, 64, 0.08);
+        }
+
+        .table th {
+            color: #004d40;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+    <div class="card card-main p-4">
+
+        <div class="d-flex justify-content-between mb-4">
+            <h3><i class="bi bi-person-badge"></i> Lista de Doctores</h3>
+
+            <a href="/admin/home" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover text-center">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="doc : ${doctores}">
+                    <td th:text="${doc.id}"></td>
+                    <td th:text="${doc.nombre + ' ' + doc.apellido  }"></td>
+                    <td th:text="${doc.correo}"></td>
+                    <td>
+                        <span class="badge bg-success">Doctor</span>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(doctores)}">
+                    <td colspan="4">No hay doctores registrados</td>
+                </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

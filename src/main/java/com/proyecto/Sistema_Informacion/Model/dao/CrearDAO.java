@@ -13,5 +13,4 @@ public interface CrearDAO extends JpaRepository<Crear, Long> {
     Crear findByCorreo(String correo);
 
     List<Crear> findByCargo(Cargo cargo);
-    
 }

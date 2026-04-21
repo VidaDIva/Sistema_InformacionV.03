@@ -1,0 +1,95 @@
+package com.proyecto.Sistema_Informacion.Controller;
+
+import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.proyecto.Sistema_Informacion.Model.entity.Cita;
+import com.proyecto.Sistema_Informacion.Model.entity.Crear;
+import com.proyecto.Sistema_Informacion.Model.enums.EstadoCita;
+import com.proyecto.Sistema_Informacion.Model.service.CitaService;
+import com.proyecto.Sistema_Informacion.Model.service.CrearService;
+
+@Controller
+@RequestMapping("/paciente")
+public class CitaController {
+
+    @Autowired
+    private CitaService citaService;
+
+    @Autowired
+    private CrearService crearService;
+
+    // 🔥 1. MOSTRAR FORMULARIO
+    @GetMapping("/agendar-cita")
+    public String mostrarFormulario(Model model) {
+
+        Cita cita = new Cita();
+
+        List<Crear> doctores = crearService.listarMedicos();
+
+        model.addAttribute("cita", cita);
+        model.addAttribute("doctores", doctores);
+
+        return "Paciente/agendar-cita";
+    }
+
+@PostMapping("/guardar-cita")
+public String guardarCita(
+        @RequestParam Long doctorId,
+        @RequestParam String fecha,
+        @RequestParam String hora,
+        @RequestParam String motivo,
+        Principal principal,
+        Model model
+) {
+
+    try {
+
+        Crear paciente = crearService.buscarPorCorreo(principal.getName());
+        Crear doctor = crearService.buscarPorId(doctorId);
+
+        Cita cita = new Cita();
+        cita.setPaciente(paciente);
+        cita.setDoctor(doctor);
+        cita.setFecha(LocalDate.parse(fecha));
+        cita.setHora(LocalTime.parse(hora));
+        cita.setMotivo(motivo);
+        cita.setEstado(EstadoCita.PENDIENTE);
+
+        citaService.guardar(cita);
+
+        return "redirect:/paciente/mis-citas";
+
+    } catch (Exception e) {
+
+        // 🔥 reenviar formulario con error
+        model.addAttribute("error", e.getMessage());
+        model.addAttribute("doctores", crearService.listarMedicos());
+
+        return "Paciente/agendar-cita";
+    }
+}
+
+    // 🔥 3. VER CITAS DEL PACIENTE
+    @GetMapping("/mis-citas")
+    public String verMisCitas(Model model, Principal principal) {
+
+        Crear paciente = crearService.buscarPorCorreo(principal.getName());
+
+        List<Cita> citas = citaService.citasPorPaciente(paciente.getId());
+
+        model.addAttribute("citas", citas);
+
+        return "Paciente/mis-citas";
+    }
+}
