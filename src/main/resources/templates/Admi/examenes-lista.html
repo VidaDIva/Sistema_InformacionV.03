@@ -140,7 +140,7 @@
                 </a>
                 <h3 class="fw-bold m-0" style="color: #263238;">Historial de Exámenes</h3>
             </div>
-            
+
             <a th:href="@{/admin/examenes/nuevo}" class="btn-new shadow-sm">
                 <i class="bi bi-plus-lg me-2"></i>Nuevo Examen
             </a>
@@ -167,29 +167,28 @@
                         <td th:text="${e.fechaVencimiento}"></td>
 
                         <td>
-                            <span th:if="${e.estado.name() == 'VIGENTE'}" 
-                                  class="badge-status bg-success-subtle text-success">
-                                  <i class="bi bi-check-circle-fill me-1"></i> VIGENTE
+                            <span th:if="${e.estado.name() == 'VIGENTE'}"
+                                class="badge-status bg-success-subtle text-success">
+                                <i class="bi bi-check-circle-fill me-1"></i> VIGENTE
                             </span>
-                            <span th:if="${e.estado.name() == 'VENCIDO'}" 
-                                  class="badge-status bg-danger-subtle text-danger">
-                                  <i class="bi bi-x-circle-fill me-1"></i> VENCIDO
+                            <span th:if="${e.estado.name() == 'VENCIDO'}"
+                                class="badge-status bg-danger-subtle text-danger">
+                                <i class="bi bi-x-circle-fill me-1"></i> VENCIDO
                             </span>
-                            <span th:if="${e.estado.name() == 'PROXIMO'}" 
-                                  class="badge-status bg-warning-subtle text-warning-emphasis">
-                                  <i class="bi bi-clock-history me-1"></i> PRÓXIMO
+                            <span th:if="${e.estado.name() == 'PROXIMO'}"
+                                class="badge-status bg-warning-subtle text-warning-emphasis">
+                                <i class="bi bi-clock-history me-1"></i> PRÓXIMO
                             </span>
                         </td>
 
                         <td>
-                            <a th:href="@{'/admin/examenes/eliminar/' + ${e.id}}"
-                               class="btn-delete"
-                               onclick="return confirm('¿Desea eliminar este registro de examen?')">
+                            <a th:href="@{'/admin/examenes/eliminar/' + ${e.id}}" class="btn-delete"
+                                onclick="return confirm('¿Desea eliminar este registro de examen?')">
                                 <i class="bi bi-trash3"></i>
                             </a>
                         </td>
                     </tr>
-                    
+
                     <tr th:if="${#lists.isEmpty(examenes)}">
                         <td colspan="6" class="py-5 text-muted">
                             <i class="bi bi-clipboard2-x fs-2 d-block mb-2"></i>

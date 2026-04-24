@@ -13,7 +13,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #E0F2F1; /* Verde menta de SaludSync */
+            background-color: #E0F2F1;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -115,19 +115,17 @@
         </p>
 
         <form th:action="@{/login/recuperar}" method="post">
-            
+
             <div class="mb-4">
                 <label class="form-label ms-1">Correo Electrónico</label>
                 <div class="input-group">
-                    <span class="input-group-text border-end-0 bg-transparent text-muted" style="border-radius: 12px 0 0 12px; border: 2px solid #eef2f2;">
+                    <span class="input-group-text border-end-0 bg-transparent text-muted"
+                        style="border-radius: 12px 0 0 12px; border: 2px solid #eef2f2;">
                         <i class="bi bi-envelope"></i>
                     </span>
-                    <input type="email" 
-                           name="correo" 
-                           class="form-control border-start-0" 
-                           placeholder="nombre@ejemplo.com" 
-                           style="border-radius: 0 12px 12px 0; border: 2px solid #eef2f2;"
-                           required>
+                    <input type="email" name="correo" class="form-control border-start-0"
+                        placeholder="nombre@ejemplo.com"
+                        style="border-radius: 0 12px 12px 0; border: 2px solid #eef2f2;" required>
                 </div>
             </div>
 

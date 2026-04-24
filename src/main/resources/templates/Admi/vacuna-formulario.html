@@ -39,7 +39,8 @@
             margin-top: 10px;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border-radius: 10px;
             border: 1px solid #e0f2f1;
             padding: 12px 15px;
@@ -114,11 +115,11 @@
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-7">
-                
+
                 <div class="card card-vacuna">
                     <div class="card-header-accent"></div>
                     <div class="p-5">
-                        
+
                         <div class="title-container">
                             <h3 class="fw-bold m-0" style="color: #004d40;">
                                 <i class="bi bi-patch-check-fill me-2" style="color: #5bc0be;"></i> Registrar Vacuna
@@ -128,21 +129,23 @@
                             </a>
                         </div>
 
-                        <p class="text-muted mb-4 small">Complete la información para el registro oficial de inmunización.</p>
+                        <p class="text-muted mb-4 small">Complete la información para el registro oficial de
+                            inmunización.</p>
 
                         <form th:action="@{/admin/vacunas/guardar}" th:object="${vacuna}" method="post">
-                            
+
                             <div class="mb-4">
                                 <label class="form-label">Médico Responsable</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white border-end-0" style="border-radius: 10px 0 0 10px; border-color: #e0f2f1;">
+                                    <span class="input-group-text bg-white border-end-0"
+                                        style="border-radius: 10px 0 0 10px; border-color: #e0f2f1;">
                                         <i class="bi bi-person-badge text-muted"></i>
                                     </span>
-                                    <select th:field="*{medico.id}" class="form-select border-start-0" style="border-radius: 0 10px 10px 0;" required>
+                                    <select th:field="*{medico.id}" class="form-select border-start-0"
+                                        style="border-radius: 0 10px 10px 0;" required>
                                         <option value="">Seleccione el profesional</option>
-                                        <option th:each="m : ${medicos}"
-                                                th:value="${m.id}"
-                                                th:text="${m.nombre + ' ' + m.apellido}">
+                                        <option th:each="m : ${medicos}" th:value="${m.id}"
+                                            th:text="${m.nombre + ' ' + m.apellido}">
                                         </option>
                                     </select>
                                 </div>
@@ -168,10 +171,12 @@
                             <div class="mb-5">
                                 <label class="form-label">Fecha de Aplicación</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white border-end-0" style="border-radius: 10px 0 0 10px; border-color: #e0f2f1;">
+                                    <span class="input-group-text bg-white border-end-0"
+                                        style="border-radius: 10px 0 0 10px; border-color: #e0f2f1;">
                                         <i class="bi bi-calendar-event text-muted"></i>
                                     </span>
-                                    <input type="date" th:field="*{fechaAplicacion}" class="form-control border-start-0" style="border-radius: 0 10px 10px 0;" required>
+                                    <input type="date" th:field="*{fechaAplicacion}" class="form-control border-start-0"
+                                        style="border-radius: 0 10px 10px 0;" required>
                                 </div>
                             </div>
 

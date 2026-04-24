@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Doctores - SaludSync</title>
 
@@ -30,53 +31,54 @@
 
 <body>
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
-    <div class="card card-main p-4">
+        <div class="card card-main p-4">
 
-        <div class="d-flex justify-content-between mb-4">
-            <h3><i class="bi bi-person-badge"></i> Lista de Doctores</h3>
+            <div class="d-flex justify-content-between mb-4">
+                <h3><i class="bi bi-person-badge"></i> Lista de Doctores</h3>
 
-            <a href="/admin/home" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> Volver
-            </a>
-        </div>
+                <a href="/admin/home" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+            </div>
 
-        <div class="table-responsive">
-            <table class="table table-hover text-center">
+            <div class="table-responsive">
+                <table class="table table-hover text-center">
 
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                </tr>
-                </thead>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
+                    <tbody>
 
-                <tr th:each="doc : ${doctores}">
-                    <td th:text="${doc.id}"></td>
-                    <td th:text="${doc.nombre + ' ' + doc.apellido  }"></td>
-                    <td th:text="${doc.correo}"></td>
-                    <td>
-                        <span class="badge bg-success">Doctor</span>
-                    </td>
-                </tr>
+                        <tr th:each="doc : ${doctores}">
+                            <td th:text="${doc.id}"></td>
+                            <td th:text="${doc.nombre + ' ' + doc.apellido  }"></td>
+                            <td th:text="${doc.correo}"></td>
+                            <td>
+                                <span class="badge bg-success">Doctor</span>
+                            </td>
+                        </tr>
 
-                <tr th:if="${#lists.isEmpty(doctores)}">
-                    <td colspan="4">No hay doctores registrados</td>
-                </tr>
+                        <tr th:if="${#lists.isEmpty(doctores)}">
+                            <td colspan="4">No hay doctores registrados</td>
+                        </tr>
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
+
         </div>
 
     </div>
 
-</div>
-
 </body>
+
 </html>

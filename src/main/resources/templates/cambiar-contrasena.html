@@ -13,7 +13,8 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #E0F2F1; /* Verde menta de la marca */
+            background-color: #E0F2F1;
+            /* Verde menta de la marca */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -97,7 +98,7 @@
             border-radius: 0 10px 10px 0 !important;
         }
 
-        .input-group > .form-control {
+        .input-group>.form-control {
             border-radius: 10px 0 0 10px !important;
         }
     </style>
@@ -118,9 +119,10 @@
                 <label class="form-label">Nueva Contraseña</label>
                 <div class="input-group shadow-sm">
                     <input type="password" id="nuevaContrasena" name="nuevaContrasena" class="form-control"
-                           onkeyup="medirSeguridad('nuevaContrasena','barra1','texto1')" 
-                           placeholder="Escribe tu nueva clave" required>
-                    <button type="button" class="btn btn-outline-secondary border-start-0" onclick="togglePassword('nuevaContrasena')">
+                        onkeyup="medirSeguridad('nuevaContrasena','barra1','texto1')"
+                        placeholder="Escribe tu nueva clave" required>
+                    <button type="button" class="btn btn-outline-secondary border-start-0"
+                        onclick="togglePassword('nuevaContrasena')">
                         <i class="bi bi-eye"></i>
                     </button>
                 </div>
@@ -139,8 +141,9 @@
                 <label class="form-label">Confirmar Contraseña</label>
                 <div class="input-group shadow-sm">
                     <input type="password" id="confirmarContrasena" name="confirmarContrasena" class="form-control"
-                           placeholder="Repite la clave" required>
-                    <button type="button" class="btn btn-outline-secondary border-start-0" onclick="togglePassword('confirmarContrasena')">
+                        placeholder="Repite la clave" required>
+                    <button type="button" class="btn btn-outline-secondary border-start-0"
+                        onclick="togglePassword('confirmarContrasena')">
                         <i class="bi bi-eye"></i>
                     </button>
                 </div>

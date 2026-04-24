@@ -117,9 +117,20 @@
         }
 
         /* Badges de Estado */
-        .badge-entregado { background-color: #e8f5e9; color: #2e7d32; }
-        .badge-usado { background-color: #fff3e0; color: #ef6c00; }
-        .badge-desechado { background-color: #eceff1; color: #546e7a; }
+        .badge-entregado {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .badge-usado {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .badge-desechado {
+            background-color: #eceff1;
+            color: #546e7a;
+        }
     </style>
 </head>
 
@@ -134,7 +145,7 @@
                 </a>
                 <h3 class="fw-bold m-0" style="color: #263238;">Inventario de Insumos</h3>
             </div>
-            
+
             <a th:href="@{/admin/insumos/nuevo}" class="btn-new shadow-sm">
                 <i class="bi bi-plus-lg me-2"></i>Nuevo Insumo
             </a>
@@ -167,21 +178,20 @@
                         </td>
 
                         <td>
-                            <span th:text="${i.estado}" 
-                                  th:classappend="${i.estado == 'ENTREGADO' ? 'badge-entregado' : (i.estado == 'USADO' ? 'badge-usado' : 'badge-desechado')}"
-                                  class="badge px-3 py-2">
+                            <span th:text="${i.estado}"
+                                th:classappend="${i.estado == 'ENTREGADO' ? 'badge-entregado' : (i.estado == 'USADO' ? 'badge-usado' : 'badge-desechado')}"
+                                class="badge px-3 py-2">
                             </span>
                         </td>
 
                         <td>
-                            <a th:href="@{'/admin/insumos/eliminar/' + ${i.id}}"
-                               class="btn-delete"
-                               onclick="return confirm('¿Está seguro de eliminar este registro del inventario?')">
+                            <a th:href="@{'/admin/insumos/eliminar/' + ${i.id}}" class="btn-delete"
+                                onclick="return confirm('¿Está seguro de eliminar este registro del inventario?')">
                                 <i class="bi bi-trash3"></i>
                             </a>
                         </td>
                     </tr>
-                    
+
                     <tr th:if="${#lists.isEmpty(insumos)}">
                         <td colspan="7" class="py-5 text-muted">
                             <i class="bi bi-info-circle fs-2 d-block mb-2"></i>

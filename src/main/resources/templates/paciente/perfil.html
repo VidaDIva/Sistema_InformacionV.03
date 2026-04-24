@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Perfil Médico - SaludSync</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-dark: #266c60;
+            --accent-teal: #5bc0be;
+            --bg-light: #f4fbfb;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+
+        .card-profile {
+            max-width: 750px;
+            margin: 60px auto;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0, 77, 64, 0.1);
+            overflow: hidden;
+        }
+
+        /* Encabezado decorativo del perfil */
+        .profile-header-bg {
+            background: linear-gradient(135deg, var(--primary-dark), var(--accent-teal));
+            height: 120px;
+            width: 100%;
+        }
+
+        .profile-content {
+            margin-top: -65px;
+            /* Sube el contenido sobre el fondo de color */
+            padding: 0 40px 40px 40px;
+        }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        .doctor-name {
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .doctor-badge {
+            background-color: #e0f2f1;
+            color: var(--primary-dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .info-label i {
+            color: var(--accent-teal);
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .info-value {
+            color: #555;
+            padding-left: 28px;
+            /* Alineación con el texto del label */
+            font-size: 1rem;
+        }
+
+        .info-box {
+            background: #fafdfd;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #edf7f6;
+            transition: 0.3s;
+        }
+
+        .info-box:hover {
+            border-color: var(--accent-teal);
+            background: white;
+        }
+
+        /* Botones */
+        .btn-edit {
+            background-color: var(--primary-dark);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-edit:hover {
+            background-color: var(--accent-teal);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-weight: 600;
+            color: #666;
+            border: 2px solid #eee;
+        }
+
+        .btn-back:hover {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card card-profile">
+            <div class="profile-header-bg"></div>
+
+            <div class="profile-content text-center">
+                <div class="avatar-container">
+                    <img th:src="@{'/sistema_informacion/uploads/Paciente/' + ${paciente.imagen}}" alt="Avatar"
+                        class="avatar">
+                </div>
+
+                <h2 class="paciente-name" th:text="${paciente.nombre} + ' ' + ${paciente.apellido}">Nombre del Paciente
+                </h2>
+                <div class="paciente-badge mb-4">
+                    <i class="bi bi-patch-check-fill me-1"></i> Personal Verificado
+                </div>
+
+                <div class="row g-4 text-start mt-2">
+                    <div class="col-md-6">
+                        <div class="info-box">
+                            <label class="info-label"><i class="bi bi-envelope"></i> Correo Electrónico</label>
+                            <p class="info-value mb-0" th:text="${paciente.correo}">correo@ejemplo.com</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="info-box">
+                            <label class="info-label"><i class="bi bi-telephone"></i> Número de Celular</label>
+                            <p class="info-value mb-0" th:text="${paciente.celular}">+57 300 000 0000</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="info-box">
+                            <label class="info-label"><i class="bi bi-geo-alt"></i> Dirección de Consultorio</label>
+                            <p class="info-value mb-0" th:text="${paciente.direccion}">Calle 00 # 00 - 00, Medellín</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 d-flex flex-column flex-sm-row justify-content-center gap-3">
+                    <a th:href="@{/paciente/pEditar}" class="btn btn-edit shadow-sm">
+                        <i class="bi bi-pencil-square me-2"></i>Editar mi Perfil
+                    </a>
+
+                    <a th:href="@{/paciente/home}" class="btn btn-back">
+                        <i class="bi bi-arrow-left me-2"></i>Volver al Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

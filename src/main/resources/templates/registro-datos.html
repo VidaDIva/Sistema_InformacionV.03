@@ -5,7 +5,7 @@
     <title>Registro - SaludSync</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -13,7 +13,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #E0F2F1; /* Fondo verde menta claro coherente con la marca */
+            background-color: #E0F2F1;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -26,7 +26,8 @@
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 77, 64, 0.1);
             width: 100%;
-            max-width: 600px; /* Un poco más ancho para que los campos en fila respiren */
+            max-width: 600px;
+            /* Un poco más ancho para que los campos en fila respiren */
             padding: 40px;
         }
 
@@ -42,14 +43,16 @@
             font-size: 0.9rem;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border-radius: 10px;
             padding: 12px;
             border: 1px solid #dee2e6;
             transition: all 0.3s ease;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: #5bc0be;
             box-shadow: 0 0 0 0.25rem rgba(91, 192, 190, 0.2);
             outline: none;
@@ -92,10 +95,7 @@
             <p class="text-muted small">Llena la información para finalizar tu perfil profesional</p>
         </div>
 
-        <form th:action="@{/cuenta/registro-datos}" 
-              method="post" 
-              th:object="${crear}"
-              enctype="multipart/form-data">
+        <form th:action="@{/cuenta/registro-datos}" method="post" th:object="${crear}" enctype="multipart/form-data">
 
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -121,30 +121,24 @@
 
             <div class="mb-3">
                 <label class="form-label">Dirección <span class="text-danger">*</span></label>
-                <input type="text" th:field="*{direccion}" class="form-control" placeholder="Calle, Carrera, Barrio..." required>
+                <input type="text" th:field="*{direccion}" class="form-control" placeholder="Calle, Carrera, Barrio..."
+                    required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Tipo de usuario <span class="text-danger">*</span></label>
                 <select class="form-select" th:field="*{cargo.id}" required>
                     <option value="">Seleccione una opción</option>
-                    <option th:each="c : ${cargos}"
-                            th:value="${c.id}"
-                            th:text="${c.cargo}">
+                    <option th:each="c : ${cargos}" th:value="${c.id}" th:text="${c.cargo}">
                     </option>
                 </select>
             </div>
 
             <div class="mb-4">
                 <label for="formFile" class="form-label">Foto de perfil <span class="text-danger">*</span></label>
-                <input type="file" 
-                       class="form-control" 
-                       id="formFile" 
-                       name="file"
-                       accept=".jpg,.png" 
-                       required>
+                <input type="file" class="form-control" id="formFile" name="file" accept=".jpg,.png" required>
                 <div class="form-text mt-2 text-info d-flex align-items-center">
-                    <i class="bi bi-info-circle me-2"></i> 
+                    <i class="bi bi-info-circle me-2"></i>
                     <span>Se recomienda subir una foto clara de tu rostro.</span>
                 </div>
             </div>
@@ -153,7 +147,8 @@
                 <button type="submit" class="btn btn-primary text-white shadow-sm">
                     Siguiente
                 </button>
-                <a href="javascript:history.back()" class="btn btn-link text-muted btn-sm text-decoration-none text-center">
+                <a href="javascript:history.back()"
+                    class="btn btn-link text-muted btn-sm text-decoration-none text-center">
                     <i class="bi bi-arrow-left"></i> Volver atrás
                 </a>
             </div>

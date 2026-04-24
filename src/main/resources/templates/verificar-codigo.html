@@ -13,7 +13,8 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #E0F2F1; /* Verde menta coherente */
+            background-color: #E0F2F1;
+            /* Verde menta coherente */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -110,13 +111,8 @@
         <form th:action="@{/login/verificar-codigo}" method="post">
 
             <div class="mb-4">
-                <input type="text" 
-                       name="codigo" 
-                       class="form-control" 
-                       placeholder="000000"
-                       maxlength="6"
-                       required 
-                       autocomplete="one-time-code">
+                <input type="text" name="codigo" class="form-control" placeholder="000000" maxlength="6" required
+                    autocomplete="one-time-code">
             </div>
 
             <div class="d-grid shadow-sm">

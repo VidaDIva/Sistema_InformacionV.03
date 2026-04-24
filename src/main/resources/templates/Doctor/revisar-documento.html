@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Revisar Documento - SaludSync</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --primary-dark: #004d40;
+            --accent-teal: #5bc0be;
+            --bg-light: #f4fbfb;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+
+        .card-review {
+            max-width: 900px;
+            margin: 50px auto;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0, 77, 64, 0.08);
+            overflow: hidden;
+        }
+
+        .header-review {
+            background: linear-gradient(135deg, var(--primary-dark), var(--accent-teal));
+            padding: 30px;
+            color: white;
+        }
+
+        .info-section {
+            background-color: #f8fdfd;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #e0f2f1;
+        }
+
+        .label-custom {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .value-custom {
+            font-size: 1rem;
+            color: #444;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .value-custom i {
+            color: var(--accent-teal);
+            margin-right: 10px;
+        }
+
+        /* Formulario de Revisión */
+        .form-section {
+            padding: 30px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 12px;
+            padding: 12px 15px;
+            border: 2px solid #e0f2f1;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 0.25rem rgba(91, 192, 190, 0.1);
+        }
+
+        /* Botones */
+        .btn-save {
+            background-color: var(--primary-dark);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-save:hover {
+            background-color: var(--accent-teal);
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-weight: 600;
+            color: #666;
+            border: 2px solid #eee;
+        }
+
+        .file-box {
+            background: white;
+            border: 1px solid #d9efee;
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card card-review">
+            <div class="header-review text-center text-md-start">
+                <h3 class="mb-0 fw-bold">
+                    <i class="bi bi-clipboard2-pulse me-2"></i> Revisión Médica de Documento
+                </h3>
+            </div>
+
+            <div class="row g-0">
+                <div class="col-md-5 p-4 border-end" style="background-color: #fafdfd;">
+                    <h5 class="section-title mb-4" style="color: var(--primary-dark); font-weight: 700;">Detalles del
+                        Envío</h5>
+
+                    <div class="info-section">
+                        <span class="label-custom">Paciente</span>
+                        <div class="value-custom">
+                            <i class="bi bi-person-circle"></i>
+                            <span th:text="${documento.paciente.nombre}">Juan Pérez</span>
+                        </div>
+
+                        <span class="label-custom">Tipo de Documento</span>
+                        <div class="value-custom">
+                            <i class="bi bi-file-earmark-text"></i>
+                            <span th:text="${documento.tipoDocumento}">Resultado Laboratorio</span>
+                        </div>
+
+                        <span class="label-custom">Archivo Adjunto</span>
+                        <div class="mb-3">
+                            <div class="file-box shadow-sm">
+                                <i class="bi bi-paperclip me-2 text-teal"></i>
+                                <span th:text="${documento.nombreArchivo}">examen.pdf</span>
+                                <a th:href="@{/doctor/ver-documento/{id}(id=${documento.id})}" target="_blank"
+                                    class="btn btn-info btn-sm">
+                                    👁️ Ver PDF
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <span class="label-custom">Nota del Paciente</span>
+                        <p class="small text-muted italic" th:text="${documento.nota}">
+                            "Adjunto los resultados solicitados para la revisión de cardiología."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="form-section">
+                        <form th:action="@{/doctor/revisar/guardar}" method="post">
+                            <input type="hidden" name="id" th:value="${documento.id}">
+
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="bi bi-chat-left-dots me-2"></i>Observación Médica
+                                </label>
+                                <textarea name="observacion" rows="5" class="form-control"
+                                    placeholder="Escriba aquí sus comentarios técnicos o instrucciones para el paciente..."
+                                    required></textarea>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="bi bi-check2-square me-2"></i>Estado de la Revisión
+                                </label>
+                                <select name="estado" class="form-select">
+                                    <option value="APROBADO">✅ Validado / Aprobado</option>
+                                    <option value="RECHAZADO">❌ Requiere Corrección / Rechazado</option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex gap-3">
+                                <button type="submit" class="btn btn-save shadow-sm flex-grow-1">
+                                    Guardar Revisión
+                                </button>
+                                <a th:href="@{/doctor/documentos}"class="btn btn-back">
+                                    Volver
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center py-4 text-muted small">
+            © 2026 SaludSync - Módulo de Auditoría Médica
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

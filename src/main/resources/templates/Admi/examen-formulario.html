@@ -39,7 +39,8 @@
             margin-top: 10px;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border-radius: 10px;
             border: 1px solid #e0f2f1;
             padding: 12px 15px;
@@ -111,14 +112,15 @@
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                
+
                 <div class="card card-examen">
                     <div class="card-header-accent"></div>
                     <div class="p-5">
-                        
+
                         <div class="title-container">
                             <h3 class="fw-bold m-0" style="color: #004d40;">
-                                <i class="bi bi-clipboard2-pulse-fill me-2" style="color: #5bc0be;"></i> Registrar Examen
+                                <i class="bi bi-clipboard2-pulse-fill me-2" style="color: #5bc0be;"></i> Registrar
+                                Examen
                             </h3>
                             <a th:href="@{/admin/home}" class="btn-home shadow-sm" title="Ir al Inicio">
                                 <i class="bi bi-house-door-fill"></i>
@@ -126,15 +128,14 @@
                         </div>
 
                         <form th:action="@{/admin/examenes/guardar}" th:object="${examen}" method="post">
-                            
+
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label">Médico Solicitante</label>
                                     <select th:field="*{medico.id}" class="form-select" required>
                                         <option value="">Seleccione médico</option>
-                                        <option th:each="m : ${medicos}"
-                                                th:value="${m.id}"
-                                                th:text="${m.nombre + ' ' + m.apellido}">
+                                        <option th:each="m : ${medicos}" th:value="${m.id}"
+                                            th:text="${m.nombre + ' ' + m.apellido}">
                                         </option>
                                     </select>
                                 </div>
@@ -158,7 +159,8 @@
 
                                 <div class="col-md-12 mb-4">
                                     <label class="form-label">Observaciones Médicas</label>
-                                    <textarea th:field="*{observaciones}" class="form-control" rows="3" placeholder="Escriba hallazgos o notas adicionales..."></textarea>
+                                    <textarea th:field="*{observaciones}" class="form-control" rows="3"
+                                        placeholder="Escriba hallazgos o notas adicionales..."></textarea>
                                 </div>
                             </div>
 

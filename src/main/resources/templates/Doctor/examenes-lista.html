@@ -55,76 +55,75 @@
 
 <body>
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
-    <!-- HEADER -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold text-success">
-            <i class="bi bi-clipboard2-pulse-fill"></i> Mis Exámenes Médicos
-        </h3>
+        <!-- HEADER -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold text-success">
+                <i class="bi bi-clipboard2-pulse-fill"></i> Mis Exámenes Médicos
+            </h3>
 
-        <a th:href="@{/doctor/home}" class="btn-home shadow-sm" title="Inicio">
-            <i class="bi bi-house-door-fill"></i>
-        </a>
+            <a th:href="@{/doctor/home}" class="btn-home shadow-sm" title="Inicio">
+                <i class="bi bi-house-door-fill"></i>
+            </a>
+        </div>
+
+        <!-- TABLA -->
+        <div class="card shadow p-4">
+
+            <table class="table table-hover align-middle text-center">
+                <thead>
+                    <tr>
+                        <th>Médico</th>
+                        <th>Tipo</th>
+                        <th>Fecha Realización</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Estado</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="e : ${examenes}">
+
+                        <!-- 👨‍⚕️ Médico -->
+                        <td th:text="${e.medico.nombre + ' ' + e.medico.apellido}"></td>
+
+                        <!-- 🧪 Tipo -->
+                        <td th:text="${e.tipoExamen}"></td>
+
+                        <!-- 📅 Fecha -->
+                        <td th:text="${e.fechaRealizacion}"></td>
+
+                        <!-- 📅 Vencimiento -->
+                        <td th:text="${e.fechaVencimiento}"></td>
+
+                        <!-- 🔥 Estado -->
+                        <td>
+                            <span th:if="${e.estado.name() == 'VIGENTE'}" class="badge badge-activo">Vigente</span>
+
+                            <span th:if="${e.estado.name() == 'VENCIDO'}" class="badge badge-vencido">Vencido</span>
+                        </td>
+
+                        <!-- 📝 Observaciones -->
+                        <td th:text="${e.observaciones}"></td>
+
+                    </tr>
+
+                    <!-- Si no hay datos -->
+                    <tr th:if="${#lists.isEmpty(examenes)}">
+                        <td colspan="6" class="text-muted">
+                            No hay exámenes registrados
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
     </div>
-
-    <!-- TABLA -->
-    <div class="card shadow p-4">
-
-        <table class="table table-hover align-middle text-center">
-            <thead>
-                <tr>
-                    <th>Médico</th>
-                    <th>Tipo</th>
-                    <th>Fecha Realización</th>
-                    <th>Fecha Vencimiento</th>
-                    <th>Estado</th>
-                    <th>Observaciones</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr th:each="e : ${examenes}">
-                    
-                    <!-- 👨‍⚕️ Médico -->
-                    <td th:text="${e.medico.nombre + ' ' + e.medico.apellido}"></td>
-
-                    <!-- 🧪 Tipo -->
-                    <td th:text="${e.tipoExamen}"></td>
-
-                    <!-- 📅 Fecha -->
-                    <td th:text="${e.fechaRealizacion}"></td>
-
-                    <!-- 📅 Vencimiento -->
-                    <td th:text="${e.fechaVencimiento}"></td>
-
-                    <!-- 🔥 Estado -->
-                    <td>
-                        <span th:if="${e.estado.name() == 'VIGENTE'}"
-                              class="badge badge-activo">Vigente</span>
-
-                        <span th:if="${e.estado.name() == 'VENCIDO'}"
-                              class="badge badge-vencido">Vencido</span>
-                    </td>
-
-                    <!-- 📝 Observaciones -->
-                    <td th:text="${e.observaciones}"></td>
-
-                </tr>
-
-                <!-- Si no hay datos -->
-                <tr th:if="${#lists.isEmpty(examenes)}">
-                    <td colspan="6" class="text-muted">
-                        No hay exámenes registrados
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-
-    </div>
-
-</div>
 
 </body>
+
 </html>

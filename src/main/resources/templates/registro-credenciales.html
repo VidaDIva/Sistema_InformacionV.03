@@ -13,7 +13,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #E0F2F1; /* Verde menta de la marca */
+            background-color: #E0F2F1;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -98,8 +98,8 @@
             border-radius: 0 10px 10px 0 !important;
             cursor: pointer;
         }
-        
-        .input-group > .form-control {
+
+        .input-group>.form-control {
             border-radius: 10px 0 0 10px !important;
         }
     </style>
@@ -120,20 +120,23 @@
                 <label class="form-label">Correo electrónico</label>
                 <div class="input-group">
                     <span class="input-group-text border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
-                    <input type="email" name="correo" class="form-control border-start-0" placeholder="ejemplo@gmail.com" required>
+                    <input type="email" name="correo" class="form-control border-start-0"
+                        placeholder="ejemplo@gmail.com" required>
                 </div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Contraseña</label>
                 <div class="input-group shadow-sm">
-                    <input type="password" id="contrasena" name="contrasena" class="form-control" 
-                           onkeyup="medirSeguridad('contrasena','barra2','texto2')" placeholder="Crea una clave segura" required>
-                    <button type="button" class="btn btn-outline-secondary border-start-0" onclick="togglePassword('contrasena')">
+                    <input type="password" id="contrasena" name="contrasena" class="form-control"
+                        onkeyup="medirSeguridad('contrasena','barra2','texto2')" placeholder="Crea una clave segura"
+                        required>
+                    <button type="button" class="btn btn-outline-secondary border-start-0"
+                        onclick="togglePassword('contrasena')">
                         <i class="bi bi-eye"></i>
                     </button>
                 </div>
-                
+
                 <small class="security-hint mt-2">
                     <i class="bi bi-shield-check"></i> Usa al menos 8 caracteres, números, mayúsculas y símbolos.
                 </small>
@@ -147,8 +150,10 @@
             <div class="mb-4">
                 <label class="form-label">Confirmar contraseña</label>
                 <div class="input-group shadow-sm">
-                    <input type="password" id="confirmar" name="confirmar" class="form-control" placeholder="Repite tu contraseña" required>
-                    <button type="button" class="btn btn-outline-secondary border-start-0" onclick="togglePassword('confirmar')">
+                    <input type="password" id="confirmar" name="confirmar" class="form-control"
+                        placeholder="Repite tu contraseña" required>
+                    <button type="button" class="btn btn-outline-secondary border-start-0"
+                        onclick="togglePassword('confirmar')">
                         <i class="bi bi-eye"></i>
                     </button>
                 </div>
@@ -158,10 +163,11 @@
                 <button type="submit" class="btn btn-primary text-white shadow-sm">
                     Enviar código de verificación
                 </button>
-                
+
                 <div class="text-danger text-center small mt-2" th:text="${error}"></div>
 
-                <a th:href="@{/cuenta/registro}" class="btn btn-link text-muted btn-sm text-decoration-none text-center mt-2">
+                <a th:href="@{/cuenta/registro}"
+                    class="btn btn-link text-muted btn-sm text-decoration-none text-center mt-2">
                     <i class="bi bi-arrow-left"></i> Volver a datos personales
                 </a>
             </div>
@@ -220,4 +226,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

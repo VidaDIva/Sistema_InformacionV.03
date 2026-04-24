@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Pacientes - SaludSync</title>
 
@@ -30,57 +31,58 @@
 
 <body>
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
-    <div class="card card-main p-4">
+        <div class="card card-main p-4">
 
-        <div class="d-flex justify-content-between mb-4">
-            <h3><i class="bi bi-people"></i> Lista de Pacientes</h3>
+            <div class="d-flex justify-content-between mb-4">
+                <h3><i class="bi bi-people"></i> Lista de Pacientes</h3>
 
-            <a href="/admin/home" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> Volver
-            </a>
-        </div>
+                <a href="/admin/home" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+            </div>
 
-        <div class="table-responsive">
-            <table class="table table-hover text-center">
+            <div class="table-responsive">
+                <table class="table table-hover text-center">
 
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Rol</th>
-                </tr>
-                </thead>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
+                    <tbody>
 
-                <tr th:each="pac : ${pacientes}">
-                    <td th:text="${pac.id}"></td>
-                    <td th:text="${pac.nombre + ' ' + pac.apellido}"></td>
+                        <tr th:each="pac : ${pacientes}">
+                            <td th:text="${pac.id}"></td>
+                            <td th:text="${pac.nombre + ' ' + pac.apellido}"></td>
 
 
-                    <!-- 🔥 CAMBIA "correo" SI TU CAMPO SE LLAMA DIFERENTE -->
-                    <td th:text="${pac.correo}"></td>
+                            <!-- 🔥 CAMBIA "correo" SI TU CAMPO SE LLAMA DIFERENTE -->
+                            <td th:text="${pac.correo}"></td>
 
-                    <td>
-                        <span class="badge bg-primary">Paciente</span>
-                    </td>
-                </tr>
+                            <td>
+                                <span class="badge bg-primary">Paciente</span>
+                            </td>
+                        </tr>
 
-                <tr th:if="${#lists.isEmpty(pacientes)}">
-                    <td colspan="4">No hay pacientes registrados</td>
-                </tr>
+                        <tr th:if="${#lists.isEmpty(pacientes)}">
+                            <td colspan="4">No hay pacientes registrados</td>
+                        </tr>
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
+
         </div>
 
     </div>
 
-</div>
-
 </body>
+
 </html>
