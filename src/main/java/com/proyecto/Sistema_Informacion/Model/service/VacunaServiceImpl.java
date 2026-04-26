@@ -62,4 +62,9 @@ public class VacunaServiceImpl implements VacunaService {
     public List<Vacuna> proximas() {
         return vacunaDAO.findByFechaRefuerzoBefore(LocalDate.now());
     }
+
+     @Override
+    public List<Vacuna> listarTodos() {
+        return vacunaDAO.findAll();
+    }
 }

@@ -25,4 +25,6 @@ public interface RegistroInsumoService {
     List<RegistroInsumo> buscarPorArea(String area);
 
     List<RegistroInsumo> noDevueltos();
+
+    List<RegistroInsumo> listarTodos();
 }

@@ -31,4 +31,6 @@ public interface CitaService {
     List<Object[]> citasPorMes();
 
     List<Object[]> citasPorDoctorBI();
+
+     List<Cita> listarTodas(); 
 }

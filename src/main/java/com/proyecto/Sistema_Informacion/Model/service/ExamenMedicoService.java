@@ -19,4 +19,6 @@ public interface ExamenMedicoService {
     List<ExamenMedico> buscarPorMedico(Long medicoId);
 
     List<ExamenMedico> vencidos();
+
+    List<ExamenMedico> listarTodos();
 }

@@ -23,4 +23,6 @@ public interface PqrsService {
     List<PQRS> buscarPorTipoSolicitud(String tipo);
 
     void responderPQRS(Long id, String respuesta);
+
+    List<PQRS> listarTodos();
 }

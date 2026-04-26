@@ -19,4 +19,5 @@ public interface DocumentoMedicoService {
 
     List<DocumentoMedico> buscarPorDoctor(Long id);
 
+    List<DocumentoMedico> listarTodos();
 }

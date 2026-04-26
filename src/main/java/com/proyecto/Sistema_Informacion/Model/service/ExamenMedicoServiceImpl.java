@@ -92,5 +92,9 @@ public class ExamenMedicoServiceImpl implements ExamenMedicoService {
         return examenDAO.findByFechaVencimientoBefore(LocalDate.now());
     }
 
+     @Override
+    public List<ExamenMedico> listarTodos() {
+        return examenDAO.findAll();
+    }
     
 }

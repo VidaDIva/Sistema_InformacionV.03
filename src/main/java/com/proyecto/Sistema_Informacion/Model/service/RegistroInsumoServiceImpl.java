@@ -100,4 +100,9 @@ public class RegistroInsumoServiceImpl implements RegistroInsumoService {
     public List<RegistroInsumo> noDevueltos() {
         return registroDAO.findByFechaDevolucionIsNull();
     }
+
+    @Override
+    public List<RegistroInsumo> listarTodos() {
+        return registroDAO.findAll();
+    }
 }

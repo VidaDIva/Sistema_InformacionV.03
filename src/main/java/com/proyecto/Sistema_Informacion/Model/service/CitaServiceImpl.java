@@ -118,4 +118,10 @@ public void guardar(Cita cita) {
     public List<Object[]> citasPorDoctorBI() {
         return citaDAO.citasPorDoctorBI();
     }
+
+    @Override
+    public List<Cita> listarTodas() {
+        return citaDAO.findAll();
+    }
+
 }

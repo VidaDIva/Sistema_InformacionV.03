@@ -52,4 +52,9 @@ implements DocumentoMedicoService {
     public List<DocumentoMedico> buscarPorDoctor(Long doctorId) {
         return documentoDAO.findByCita_Doctor_Id(doctorId);
     }
+
+    @Override
+    public List<DocumentoMedico> listarTodos() {
+        return documentoDAO.findAll();
+}
 }

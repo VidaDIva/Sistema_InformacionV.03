@@ -89,4 +89,9 @@ public class PqrsServiceImlp implements PqrsService {
         pqrsDAO.save(pqrs);
     }
 
+    @Override
+    public List<PQRS> listarTodos() {
+        return pqrsDAO.findAll();
+    }
+
 }

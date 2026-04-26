@@ -2,9 +2,14 @@ package com.proyecto.Sistema_Informacion.Controller;
 
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proyecto.Sistema_Informacion.Model.entity.Crear;
 import com.proyecto.Sistema_Informacion.Model.entity.ExamenMedico;
+import com.proyecto.Sistema_Informacion.Model.entity.PQRS;
 import com.proyecto.Sistema_Informacion.Model.entity.RegistroInsumo;
 import com.proyecto.Sistema_Informacion.Model.entity.Vacuna;
 import com.proyecto.Sistema_Informacion.Model.enums.EstadoCita;
@@ -26,6 +32,7 @@ import com.proyecto.Sistema_Informacion.Model.enums.EstadoExamen;
 import com.proyecto.Sistema_Informacion.Model.enums.EstadoVacuna;
 import com.proyecto.Sistema_Informacion.Model.service.CitaService;
 import com.proyecto.Sistema_Informacion.Model.service.CrearService;
+import com.proyecto.Sistema_Informacion.Model.service.DocumentoMedicoService;
 import com.proyecto.Sistema_Informacion.Model.service.ExamenMedicoService;
 import com.proyecto.Sistema_Informacion.Model.service.PqrsService;
 import com.proyecto.Sistema_Informacion.Model.service.RegistroInsumoService;
@@ -43,17 +50,24 @@ public class AdmiController {
     private final RegistroInsumoService insumoService;
     private final CrearService usuarioService;
     private final CitaService citaService;
+    private final DocumentoMedicoService documentoMedicoService;
+    private final CrearService crearService;
 
 
 
-    public AdmiController(PqrsService pqrsService, ExamenMedicoService examenService, VacunaService vacunaService,
-            RegistroInsumoService insumoService, CrearService usuarioService, CitaService citaService) {
+
+
+public AdmiController(PqrsService pqrsService, ExamenMedicoService examenService, VacunaService vacunaService,
+            RegistroInsumoService insumoService, CrearService usuarioService, CitaService citaService,
+            DocumentoMedicoService documentoMedicoService, CrearService crearService) {
         this.pqrsService = pqrsService;
         this.examenService = examenService;
         this.vacunaService = vacunaService;
         this.insumoService = insumoService;
         this.usuarioService = usuarioService;
         this.citaService = citaService;
+        this.documentoMedicoService = documentoMedicoService;
+        this.crearService = crearService;
     }
 
 // ===============================
@@ -260,6 +274,246 @@ public String homeAdmin(Model model, HttpSession session) {
         }
     }
 
+   @GetMapping("/backup-excel")
+public ResponseEntity<Resource> exportarExcel() {
+
+    try {
+
+        String nombreArchivo =
+            "Backup_SaludSync_" +
+             System.currentTimeMillis() + ".xlsx";
+
+        String ruta =
+            "C:/backups/" + nombreArchivo;
+
+        Workbook workbook = new XSSFWorkbook();
+
+        //-----------------------------------
+        // HOJA USUARIOS
+        //-----------------------------------
+        Sheet usuariosSheet =
+            workbook.createSheet("Usuarios");
+
+        List<Crear> usuarios =
+            crearService.listarTodos();
+
+        Row cab1 = usuariosSheet.createRow(0);
+        cab1.createCell(0).setCellValue("ID");
+        cab1.createCell(1).setCellValue("Nombre");
+        cab1.createCell(2).setCellValue("Correo");
+
+        int fila=1;
+
+        for(Crear u: usuarios){
+            Row row=
+              usuariosSheet.createRow(fila++);
+            row.createCell(0).setCellValue(u.getId());
+            row.createCell(1).setCellValue(u.getNombre());
+            row.createCell(2).setCellValue(u.getCorreo());
+        }
+
+
+        //-----------------------------------
+        // HOJA EXAMENES MEDICOS
+        //-----------------------------------
+
+        Sheet examenesSheet=
+           workbook.createSheet("Examenes");
+
+        List<ExamenMedico> examenes=
+            examenService.listarTodos();
+
+        Row cab2=examenesSheet.createRow(0);
+
+        cab2.createCell(0).setCellValue("Paciente");
+        cab2.createCell(1).setCellValue("Tipo Examen");
+        cab2.createCell(2).setCellValue("Resultado");
+
+        fila=1;
+
+        for(ExamenMedico e: examenes){
+
+            Row row=
+              examenesSheet.createRow(fila++);
+
+            row.createCell(0).setCellValue(
+                e.getMedico().getNombre()
+            );
+
+            row.createCell(1).setCellValue(
+                e.getTipoExamen()
+            );
+
+            row.createCell(2).setCellValue(
+                e.getFechaRealizacion()
+            );
+
+             row.createCell(2).setCellValue(
+                e.getFechaVencimiento()
+            );
+
+        }
+
+
+        //-----------------------------------
+        // HOJA PQRS
+        //-----------------------------------
+
+        Sheet pqrsSheet=
+            workbook.createSheet("PQRS");
+
+        List<PQRS> pqrs=
+            pqrsService.listarTodos();
+
+        Row cab3=pqrsSheet.createRow(0);
+
+        cab3.createCell(0).setCellValue("Asunto");
+        cab3.createCell(1).setCellValue("Estado");
+
+        fila=1;
+
+        for(PQRS p: pqrs){
+
+            Row row=
+             pqrsSheet.createRow(fila++);
+
+            row.createCell(0).setCellValue(
+               p.getId()
+            );
+
+             row.createCell(0).setCellValue(
+               p.getTipoUsuario()
+            );
+
+             row.createCell(0).setCellValue(
+               p.getNombre()
+            );
+             row.createCell(0).setCellValue(
+               p.getCorreo()
+            );
+
+             row.createCell(0).setCellValue(
+               p.getAreaHospital()
+            );
+
+             row.createCell(0).setCellValue(
+               p.getDescripcion()
+            );
+             row.createCell(0).setCellValue(
+               p.getFechaIncidente()
+            );
+            row.createCell(1).setCellValue(
+               p.getEstado()
+            );
+        }
+
+
+
+        //-----------------------------------
+        // HOJA INSUMOS
+        //-----------------------------------
+
+        Sheet insumosSheet=
+           workbook.createSheet("Insumos");
+
+        List<RegistroInsumo> insumos=
+            insumoService.listarTodos();
+
+        Row cab4=insumosSheet.createRow(0);
+
+        cab4.createCell(0).setCellValue("Nombre");
+        cab4.createCell(1).setCellValue("Cantidad");
+
+        fila=1;
+
+        for(RegistroInsumo i: insumos){
+
+            Row row=
+              insumosSheet.createRow(fila++);
+
+            row.createCell(0).setCellValue(
+               i.getId()
+            );
+             row.createCell(0).setCellValue(
+               i.getNombreInsumo()
+            );
+             row.createCell(0).setCellValue(
+               i.getArea()
+            );
+            row.createCell(1).setCellValue(
+               i.getCantidad()
+            );
+             row.createCell(0).setCellValue(
+               i.getHoraEntrega()
+            );
+             row.createCell(0).setCellValue(
+               i.getFechaEntrega()
+            );
+        }
+
+
+
+        //-----------------------------------
+        // HOJA VACUNAS
+        //-----------------------------------
+
+        Sheet vacunasSheet=
+           workbook.createSheet("Vacunas");
+
+        List<Vacuna> vacunas=
+           vacunaService.listarTodos();
+
+        Row cab5=vacunasSheet.createRow(0);
+
+        cab5.createCell(0).setCellValue("Vacuna");
+        cab5.createCell(1).setCellValue("Dosis");
+
+        fila=1;
+
+        for(Vacuna v: vacunas){
+
+            Row row=
+              vacunasSheet.createRow(fila++);
+
+            row.createCell(0).setCellValue(
+               v.getNombre()
+            );
+
+            row.createCell(1).setCellValue(
+               v.getFechaAplicacion()
+            );
+
+            row.createCell(1).setCellValue(
+               v.getFechaRefuerzo()
+            );
+            
+        }
+
+
+        FileOutputStream out=
+            new FileOutputStream(ruta);
+
+        workbook.write(out);
+
+        out.close();
+        workbook.close();
+
+        FileSystemResource file=
+            new FileSystemResource(ruta);
+
+        return ResponseEntity.ok()
+                .header(
+                 HttpHeaders.CONTENT_DISPOSITION,
+                 "attachment; filename="+nombreArchivo
+                )
+                .body(file);
+
+    } catch(Exception e){
+        e.printStackTrace();
+        return ResponseEntity.internalServerError()
+               .body(null);
+    }
+}
     @GetMapping("/doctores")
     public String verDoctores(Model model, HttpSession session) {
 

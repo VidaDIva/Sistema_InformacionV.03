@@ -22,6 +22,9 @@ public interface CrearService {
 
     List<Crear>listarPacientes();
 
+    List<Crear> listarTodos();
+
+
     
 
 }

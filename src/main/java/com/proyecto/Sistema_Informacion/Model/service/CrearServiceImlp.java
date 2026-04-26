@@ -80,4 +80,9 @@ public class CrearServiceImlp implements CrearService {
 
         return crearDAO.findByCargo(cargoPaciente);
     }
+
+     @Override
+    public List<Crear> listarTodos() {
+        return crearDAO.findAll();
+    }
 }

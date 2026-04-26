@@ -19,4 +19,6 @@ public interface VacunaService {
     List<Vacuna> buscarPorMedico(Long medicoId);
 
     List<Vacuna> proximas();
+
+    List<Vacuna> listarTodos();
 }
