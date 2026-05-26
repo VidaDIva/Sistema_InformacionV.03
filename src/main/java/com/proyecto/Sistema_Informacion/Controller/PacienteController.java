@@ -171,10 +171,11 @@ public String guardarDocumento(
         throw new RuntimeException("Debe seleccionar un archivo");
     }
 
+    // 🔥 Buscar la cita
     Cita cita = citaService.buscarPorId(citaId);
 
+    // 🔥 Crear objeto documento
     DocumentoMedico documentoMedico = new DocumentoMedico();
-
     documentoMedico.setPaciente(paciente);
     documentoMedico.setCita(cita);
     documentoMedico.setTipoDocumento(tipoDocumento);
@@ -183,9 +184,31 @@ public String guardarDocumento(
     documentoMedico.setEstado(EstadoDocumento.PENDIENTE);
     documentoMedico.setObservacion_medico("Sin revisión");
 
-    // 🔥 AQUÍ ESTABA EL ERROR
-    String nombreArchivo = file.getOriginalFilename();
+    // =====================================================
+    // 🔥 GUARDAR ARCHIVO FÍSICO (ESTA ES LA PARTE CLAVE)
+    // =====================================================
+
+    // Nombre único
+    String nombreLimpio = file.getOriginalFilename().replaceAll("\\s+", "_");
+    String nombreArchivo = System.currentTimeMillis() + "_" + nombreLimpio;
+
+    // Ruta completa
+    Path ruta = Paths.get(uploadArc)
+                     .toAbsolutePath()
+                     .resolve(nombreArchivo);
+
+    // Crear carpeta si no existe
+    if (!Files.exists(ruta.getParent())) {
+        Files.createDirectories(ruta.getParent());
+    }
+
+    // Guardar archivo
+    Files.write(ruta, file.getBytes());
+
+    // Guardar nombre en BD
     documentoMedico.setNombreArchivo(nombreArchivo);
+
+    // =====================================================
 
     documentoMedicoService.guardar(documentoMedico);
 

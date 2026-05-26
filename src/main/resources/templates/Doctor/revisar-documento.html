@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Revisar Documento - SaludSync</title>
+    <title>SaludSync | Auditoría de Documento</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,6 +15,7 @@
             --primary-dark: #004d40;
             --accent-teal: #5bc0be;
             --bg-light: #f4fbfb;
+            --white: #ffffff;
         }
 
         body {
@@ -24,109 +25,139 @@
         }
 
         .card-review {
-            max-width: 900px;
-            margin: 50px auto;
+            max-width: 1000px;
+            margin: 40px auto;
             border: none;
-            border-radius: 30px;
-            background: white;
-            box-shadow: 0 15px 35px rgba(0, 77, 64, 0.08);
+            border-radius: 25px;
+            background: var(--white);
+            box-shadow: 0 15px 40px rgba(0, 77, 64, 0.1);
             overflow: hidden;
         }
 
-        .header-review {
-            background: linear-gradient(135deg, var(--primary-dark), var(--accent-teal));
-            padding: 30px;
+        /* Encabezado con el estilo de la App */
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent-teal) 100%);
+            padding: 25px 35px;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .info-section {
+        /* Sección de Información Lateral */
+        .info-sidebar {
             background-color: #f8fdfd;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid #e0f2f1;
+            border-right: 1px solid #e0f2f1;
+            padding: 30px;
         }
 
-        .label-custom {
-            font-weight: 600;
-            color: var(--primary-dark);
-            font-size: 0.85rem;
+        .info-group {
+            margin-bottom: 25px;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-teal);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 5px;
         }
 
-        .value-custom {
-            font-size: 1rem;
-            color: #444;
-            margin-bottom: 15px;
+        .info-value {
+            font-size: 0.95rem;
+            color: var(--primary-dark);
+            font-weight: 600;
             display: flex;
             align-items: center;
         }
 
-        .value-custom i {
-            color: var(--accent-teal);
+        .info-value i {
             margin-right: 10px;
+            font-size: 1.1rem;
         }
 
-        /* Formulario de Revisión */
-        .form-section {
-            padding: 30px;
+        /* Caja de Archivo Estilizada */
+        .file-card {
+            background: white;
+            border: 2px solid #e0f2f1;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Área de Trabajo del Doctor */
+        .work-area {
+            padding: 40px;
         }
 
         .form-label {
             font-weight: 600;
             color: var(--primary-dark);
+            margin-bottom: 10px;
         }
 
-        .form-control,
-        .form-select {
-            border-radius: 12px;
-            padding: 12px 15px;
-            border: 2px solid #e0f2f1;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: var(--accent-teal);
-            box-shadow: 0 0 0 0.25rem rgba(91, 192, 190, 0.1);
-        }
-
-        /* Botones */
-        .btn-save {
-            background-color: var(--primary-dark);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 12px 30px;
-            font-weight: 600;
+        .form-control, .form-select {
+            border-radius: 15px;
+            padding: 14px;
+            border: 2px solid #eef4f4;
+            background-color: #fcfdfe;
             transition: 0.3s;
         }
 
-        .btn-save:hover {
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 0.25rem rgba(91, 192, 190, 0.1);
+            background-color: white;
+        }
+
+        /* Botones Profesionales */
+        .btn-confirm {
+            background-color: var(--primary-dark);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 15px 30px;
+            font-weight: 700;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .btn-confirm:hover {
             background-color: var(--accent-teal);
             transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 77, 64, 0.2);
+            color: white;
         }
 
-        .btn-back {
-            border-radius: 12px;
-            padding: 12px 30px;
+        .btn-return {
+            border-radius: 15px;
+            padding: 15px 25px;
             font-weight: 600;
-            color: #666;
-            border: 2px solid #eee;
+            color: #78909c;
+            border: 2px solid #eef4f4;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: 0.3s;
         }
 
-        .file-box {
-            background: white;
-            border: 1px solid #d9efee;
-            padding: 10px 15px;
-            border-radius: 10px;
-            display: inline-flex;
-            align-items: center;
+        .btn-return:hover {
+            background-color: #f8f9fa;
             color: var(--primary-dark);
-            font-weight: 600;
-            font-size: 0.9rem;
+        }
+
+        .badge-nota {
+            background-color: #fffde7;
+            border-left: 4px solid #fbc02d;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: #5d4037;
         }
     </style>
 </head>
@@ -135,90 +166,105 @@
 
     <div class="container">
         <div class="card card-review">
-            <div class="header-review text-center text-md-start">
-                <h3 class="mb-0 fw-bold">
-                    <i class="bi bi-clipboard2-pulse me-2"></i> Revisión Médica de Documento
-                </h3>
+            
+            <div class="header-gradient">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-file-earmark-medical fs-2 me-3"></i>
+                    <div>
+                        <h4 class="mb-0 fw-bold">Revisión de Documento Clínico</h4>
+                        <small class="opacity-75">Evaluación técnica y validación médica</small>
+                    </div>
+                </div>
+                <i class="bi bi-shield-check fs-1 opacity-25"></i>
             </div>
 
             <div class="row g-0">
-                <div class="col-md-5 p-4 border-end" style="background-color: #fafdfd;">
-                    <h5 class="section-title mb-4" style="color: var(--primary-dark); font-weight: 700;">Detalles del
-                        Envío</h5>
+                <div class="col-lg-4 info-sidebar">
+                    <h5 class="fw-bold mb-4" style="color: var(--primary-dark);">Datos del Envío</h5>
 
-                    <div class="info-section">
-                        <span class="label-custom">Paciente</span>
-                        <div class="value-custom">
-                            <i class="bi bi-person-circle"></i>
+                    <div class="info-group">
+                        <span class="info-label">Paciente</span>
+                        <div class="info-value">
+                            <i class="bi bi-person-circle text-teal" style="color: var(--accent-teal);"></i>
                             <span th:text="${documento.paciente.nombre}">Juan Pérez</span>
                         </div>
+                    </div>
 
-                        <span class="label-custom">Tipo de Documento</span>
-                        <div class="value-custom">
-                            <i class="bi bi-file-earmark-text"></i>
-                            <span th:text="${documento.tipoDocumento}">Resultado Laboratorio</span>
+                    <div class="info-group">
+                        <span class="info-label">Categoría</span>
+                        <div class="info-value">
+                            <i class="bi bi-tag text-teal" style="color: var(--accent-teal);"></i>
+                            <span th:text="${documento.tipoDocumento}">Resultado de Laboratorio</span>
                         </div>
+                    </div>
 
-                        <span class="label-custom">Archivo Adjunto</span>
-                        <div class="mb-3">
-                            <div class="file-box shadow-sm">
-                                <i class="bi bi-paperclip me-2 text-teal"></i>
-                                <span th:text="${documento.nombreArchivo}">examen.pdf</span>
-                                <a th:href="@{/doctor/ver-documento/{id}(id=${documento.id})}" target="_blank"
-                                    class="btn btn-info btn-sm">
-                                    👁️ Ver PDF
-                                </a>
+                    <div class="info-group">
+                        <span class="info-label">Archivo Adjunto</span>
+                        <div class="file-card shadow-sm">
+                            <div class="d-flex align-items-center overflow-hidden">
+                                <i class="bi bi-file-pdf-fill text-danger fs-4 me-2"></i>
+                                <span class="small text-truncate fw-bold" 
+                                      th:text="${#strings.substringAfter(documento.nombreArchivo, '_')}">archivo.pdf</span>
                             </div>
+                            <a th:href="@{/doctor/ver-documento/{id}(id=${documento.id})}" target="_blank"
+                               class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                <i class="bi bi-eye"></i> Leer
+                            </a>
                         </div>
+                    </div>
 
-
-                        <span class="label-custom">Nota del Paciente</span>
-                        <p class="small text-muted italic" th:text="${documento.nota}">
-                            "Adjunto los resultados solicitados para la revisión de cardiología."
-                        </p>
+                    <div class="info-group">
+                        <span class="info-label">Nota del Paciente</span>
+                        <div class="badge-nota">
+                            <i class="bi bi-chat-quote me-1"></i>
+                            <span th:text="${documento.nota}">"Adjunto resultados para revisión"</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-md-7">
-                    <div class="form-section">
-                        <form th:action="@{/doctor/revisar/guardar}" method="post">
-                            <input type="hidden" name="id" th:value="${documento.id}">
+                <div class="col-lg-8 work-area">
+                    <form th:action="@{/doctor/revisar/guardar}" method="post">
+                        <input type="hidden" name="id" th:value="${documento.id}">
 
-                            <div class="mb-4">
-                                <label class="form-label">
-                                    <i class="bi bi-chat-left-dots me-2"></i>Observación Médica
-                                </label>
-                                <textarea name="observacion" rows="5" class="form-control"
-                                    placeholder="Escriba aquí sus comentarios técnicos o instrucciones para el paciente..."
-                                    required></textarea>
-                            </div>
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="bi bi-journal-text me-2"></i>Observaciones y Diagnóstico
+                            </label>
+                            <textarea name="observacion" rows="6" class="form-control shadow-sm" 
+                                      placeholder="Ingrese los comentarios clínicos o indicaciones detalladas para el paciente..." 
+                                      required></textarea>
+                        </div>
 
-                            <div class="mb-4">
+                        <div class="row g-3 mb-5">
+                            <div class="col-md-12">
                                 <label class="form-label">
-                                    <i class="bi bi-check2-square me-2"></i>Estado de la Revisión
+                                    <i class="bi bi-check-all me-2"></i>Dictamen Final
                                 </label>
-                                <select name="estado" class="form-select">
-                                    <option value="APROBADO">✅ Validado / Aprobado</option>
-                                    <option value="RECHAZADO">❌ Requiere Corrección / Rechazado</option>
+                                <select name="estado" class="form-select shadow-sm">
+                                    <option value="PENDIENTE">Pendiente</option>
+                                    <option value="REVISADO">Revisado</option>
+                                    <option value="REQUIERE_EXAMEN">Requiere examen</option>
+                                    <option value="APROBADO">Aprobado</option>
+                                    <option value="RECHAZADO">Rechazado</option>
                                 </select>
                             </div>
+                        </div>
 
-                            <div class="d-flex gap-3">
-                                <button type="submit" class="btn btn-save shadow-sm flex-grow-1">
-                                    Guardar Revisión
-                                </button>
-                                <a th:href="@{/doctor/documentos}"class="btn btn-back">
-                                    Volver
-                                </a>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="d-flex flex-column flex-md-row gap-3">
+                            <button type="submit" class="btn btn-confirm shadow-sm">
+                                <i class="bi bi-cloud-check-fill me-2"></i>Finalizar Revisión
+                            </button>
+                            <a th:href="@{/doctor/documentos}" class="btn btn-return px-4">
+                                Cancelar
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <footer class="text-center py-4 text-muted small">
-            © 2026 SaludSync - Módulo de Auditoría Médica
+        <footer class="text-center pb-5 text-muted small">
+            © 2026 SaludSync - Plataforma de Gestión Clínica de Alta Precisión
         </footer>
     </div>
 

@@ -4,5 +4,6 @@ public enum EstadoDocumento {
     PENDIENTE,
     REVISADO,
     REQUIERE_EXAMEN,
-    APROVADO
+    APROBADO,
+    RECHAZADO
 }

@@ -17,4 +17,8 @@ public interface VacunaDAO extends JpaRepository<Vacuna, Long> {
     // 🔍 Vacunas vencidas o próximas
    List<Vacuna> findByFechaRefuerzoBefore(LocalDate fecha);
 
+   long countByFechaRefuerzoBefore(LocalDate fecha);
+
+   long countByMedicoIdAndFechaRefuerzoBefore(Long medicoId, LocalDate fecha);
+
 }

@@ -67,7 +67,6 @@
                         <th>Paciente</th>
                         <th>Tipo Documento</th>
                         <th>Nota Paciente</th>
-                        <th>Archivo</th>
                         <th>Estado</th>
                         <th>Acción</th>
                     </tr>
@@ -85,13 +84,6 @@
                         </td>
 
                         <td th:text="${doc.nota}">
-                        </td>
-
-                        <td>
-                            <a th:href="@{'/uploads/documentos/' + ${doc.nombreArchivo}}" target="_blank"
-                                class="btn btn-outline-primary btn-sm btn-ver">
-                                Ver archivo
-                            </a>
                         </td>
 
                         <td>

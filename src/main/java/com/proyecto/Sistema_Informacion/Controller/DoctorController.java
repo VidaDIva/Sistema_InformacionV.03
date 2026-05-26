@@ -81,8 +81,8 @@ public class DoctorController {
             .count();
 
         // 🔥 VACUNAS (ejemplo: sin vacunas = alerta)
-        var vacunas = vacunaService.buscarPorMedico(usuario.getId());
-        long vacunasPendientes = vacunas.isEmpty() ? 1 : 0;
+long vacunasVencidas =
+    vacunaService.contarVencidasPorMedico(usuario.getId());
 
         // 🔥 INSUMOS BAJOS (ejemplo: cantidad < 5)
         var insumos = insumoService.buscarPorMedico(usuario.getId());
@@ -91,11 +91,11 @@ public class DoctorController {
             .count();
 
         // 🔥 TOTAL NOTIFICACIONES
-        long totalNotificaciones = vencidos + vacunasPendientes + insumosBajos;
+        long totalNotificaciones = vencidos + vacunasVencidas + insumosBajos;
 
         model.addAttribute("totalNotificaciones", totalNotificaciones);
         model.addAttribute("vencidos", vencidos);
-        model.addAttribute("vacunasPendientes", vacunasPendientes);
+        model.addAttribute("vacunasVencidas", vacunasVencidas);
         model.addAttribute("insumosBajos", insumosBajos);
 
         return "Doctor/home";
@@ -299,7 +299,7 @@ public String revisarDocumento(@PathVariable Long id, Model model) {
 
     model.addAttribute("documento", doc);
 
-    return "Doctor/revisar-documento";
+    return "doctor/revisar-documento";
 }
 
 @PostMapping("/revisar/guardar")
@@ -319,7 +319,6 @@ public String guardarRevision(
 }
 
 
-
 @GetMapping("/ver-documento/{id}")
 public ResponseEntity<FileSystemResource> verDocumento(@PathVariable Long id) {
 
@@ -332,28 +331,37 @@ public ResponseEntity<FileSystemResource> verDocumento(@PathVariable Long id) {
             return ResponseEntity.notFound().build();
         }
 
-        System.out.println("NOMBRE BD: " + doc.getNombreArchivo());
-        System.out.println("RUTA BASE: " + rutaArchivos);
+        // 🔥 DEBUG
+        System.out.println("Nombre en BD: " + doc.getNombreArchivo());
+        System.out.println("Ruta base: " + rutaArchivos);
 
-        Path path = Paths.get(rutaArchivos, doc.getNombreArchivo());
+        // 🔥 RUTA CORRECTA
+        Path path = Paths.get(rutaArchivos)
+                         .toAbsolutePath()
+                         .resolve(doc.getNombreArchivo());
+
         File archivo = path.toFile();
 
-        System.out.println("RUTA COMPLETA: " + archivo.getAbsolutePath());
+        System.out.println("Ruta completa: " + archivo.getAbsolutePath());
+        System.out.println("¿Existe?: " + archivo.exists());
 
         if (!archivo.exists()) {
-            System.out.println("ARCHIVO NO EXISTE");
             return ResponseEntity.notFound().build();
         }
 
+        // 🔥 Detecta tipo automáticamente (PDF, JPG, PNG...)
+        String tipo = Files.probeContentType(path);
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + archivo.getName())
-                .header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=\"" + archivo.getName() + "\"")
+                .header(HttpHeaders.CONTENT_TYPE,
+                        tipo != null ? tipo : "application/octet-stream")
                 .body(new FileSystemResource(archivo));
 
     } catch (Exception e) {
-        e.printStackTrace(); // 🔥 ESTE ES EL CLAVE
+        e.printStackTrace();
         return ResponseEntity.internalServerError().build();
     }
 }
-
 }

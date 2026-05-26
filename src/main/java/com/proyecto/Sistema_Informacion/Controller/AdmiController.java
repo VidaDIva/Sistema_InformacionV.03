@@ -327,7 +327,8 @@ public ResponseEntity<Resource> exportarExcel() {
 
         cab2.createCell(0).setCellValue("Paciente");
         cab2.createCell(1).setCellValue("Tipo Examen");
-        cab2.createCell(2).setCellValue("Resultado");
+        cab2.createCell(2).setCellValue("Fecha Realizacion");
+        cab2.createCell(3).setCellValue("Fecha Vencimiento");
 
         fila=1;
 
@@ -345,11 +346,11 @@ public ResponseEntity<Resource> exportarExcel() {
             );
 
             row.createCell(2).setCellValue(
-                e.getFechaRealizacion()
+                e.getFechaRealizacion().toString()
             );
 
-             row.createCell(2).setCellValue(
-                e.getFechaVencimiento()
+             row.createCell(3).setCellValue(
+                e.getFechaVencimiento().toString()
             );
 
         }
@@ -367,8 +368,16 @@ public ResponseEntity<Resource> exportarExcel() {
 
         Row cab3=pqrsSheet.createRow(0);
 
-        cab3.createCell(0).setCellValue("Asunto");
-        cab3.createCell(1).setCellValue("Estado");
+        cab3.createCell(0).setCellValue("ID");
+        cab3.createCell(1).setCellValue("Tipo Usuario");
+        cab3.createCell(2).setCellValue("Nombre");
+        cab3.createCell(3).setCellValue("Correo");
+        cab3.createCell(4).setCellValue("Area Hospital");
+        cab3.createCell(5).setCellValue("Descripcion");
+        cab3.createCell(6).setCellValue("Fecha Incidente");
+        cab3.createCell(7).setCellValue("Estado");
+
+
 
         fila=1;
 
@@ -381,28 +390,28 @@ public ResponseEntity<Resource> exportarExcel() {
                p.getId()
             );
 
-             row.createCell(0).setCellValue(
+             row.createCell(1).setCellValue(
                p.getTipoUsuario()
             );
 
-             row.createCell(0).setCellValue(
+             row.createCell(2).setCellValue(
                p.getNombre()
             );
-             row.createCell(0).setCellValue(
+             row.createCell(3).setCellValue(
                p.getCorreo()
             );
 
-             row.createCell(0).setCellValue(
+             row.createCell(4).setCellValue(
                p.getAreaHospital()
             );
 
-             row.createCell(0).setCellValue(
+             row.createCell(5).setCellValue(
                p.getDescripcion()
             );
-             row.createCell(0).setCellValue(
-               p.getFechaIncidente()
+             row.createCell(6).setCellValue(
+               p.getFechaIncidente().toString()
             );
-            row.createCell(1).setCellValue(
+            row.createCell(7).setCellValue(
                p.getEstado()
             );
         }
@@ -421,8 +430,12 @@ public ResponseEntity<Resource> exportarExcel() {
 
         Row cab4=insumosSheet.createRow(0);
 
-        cab4.createCell(0).setCellValue("Nombre");
-        cab4.createCell(1).setCellValue("Cantidad");
+        cab4.createCell(0).setCellValue("ID");
+        cab4.createCell(1).setCellValue("Nombre Insumo");
+        cab4.createCell(2).setCellValue("Area");
+        cab4.createCell(3).setCellValue("Cantidad");
+        cab4.createCell(4).setCellValue("Hora de entrega");
+        cab4.createCell(5).setCellValue("Fecha de entrega");
 
         fila=1;
 
@@ -434,20 +447,20 @@ public ResponseEntity<Resource> exportarExcel() {
             row.createCell(0).setCellValue(
                i.getId()
             );
-             row.createCell(0).setCellValue(
+             row.createCell(1).setCellValue(
                i.getNombreInsumo()
             );
-             row.createCell(0).setCellValue(
+             row.createCell(2).setCellValue(
                i.getArea()
             );
-            row.createCell(1).setCellValue(
+            row.createCell(3).setCellValue(
                i.getCantidad()
             );
-             row.createCell(0).setCellValue(
-               i.getHoraEntrega()
+             row.createCell(4).setCellValue(
+               i.getHoraEntrega().toString()
             );
-             row.createCell(0).setCellValue(
-               i.getFechaEntrega()
+             row.createCell(5).setCellValue(
+               i.getFechaEntrega().toString()
             );
         }
 
@@ -465,8 +478,10 @@ public ResponseEntity<Resource> exportarExcel() {
 
         Row cab5=vacunasSheet.createRow(0);
 
-        cab5.createCell(0).setCellValue("Vacuna");
-        cab5.createCell(1).setCellValue("Dosis");
+        cab5.createCell(0).setCellValue("Id");
+        cab5.createCell(1).setCellValue("Nombre");
+        cab5.createCell(2).setCellValue("Fecha Aplicacion");
+        cab5.createCell(3).setCellValue("Fecha Refuerzo");
 
         fila=1;
 
@@ -476,15 +491,18 @@ public ResponseEntity<Resource> exportarExcel() {
               vacunasSheet.createRow(fila++);
 
             row.createCell(0).setCellValue(
+               v.getId()
+            );
+            row.createCell(1).setCellValue(
                v.getNombre()
             );
 
-            row.createCell(1).setCellValue(
-               v.getFechaAplicacion()
+            row.createCell(2).setCellValue(
+               v.getFechaAplicacion().toString()
             );
 
-            row.createCell(1).setCellValue(
-               v.getFechaRefuerzo()
+            row.createCell(3).setCellValue(
+               v.getFechaRefuerzo().toString()
             );
             
         }

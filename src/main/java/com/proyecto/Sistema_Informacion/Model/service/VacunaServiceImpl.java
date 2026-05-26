@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto.Sistema_Informacion.Model.dao.VacunaDAO;
 import com.proyecto.Sistema_Informacion.Model.entity.Vacuna;
+import com.proyecto.Sistema_Informacion.Model.enums.EstadoVacuna;
+
 
 @Service
 public class VacunaServiceImpl implements VacunaService {
@@ -29,6 +31,16 @@ public class VacunaServiceImpl implements VacunaService {
 
     @Override
     public Vacuna guardar(Vacuna vacuna) {
+
+    // 🔥 Recalcular estado automáticamente
+        if (vacuna.getFechaRefuerzo() != null) {
+    if (vacuna.getFechaRefuerzo().isBefore(LocalDate.now())) {
+        vacuna.setEstado(EstadoVacuna.VENCIDO);
+    } else {
+        vacuna.setEstado(EstadoVacuna.VIGENTE);
+    }
+}
+
         return vacunaDAO.save(vacuna);
     }
 
@@ -41,6 +53,15 @@ public class VacunaServiceImpl implements VacunaService {
             existente.setNombre(vacuna.getNombre());
             existente.setFechaAplicacion(vacuna.getFechaAplicacion());
             existente.setFechaRefuerzo(vacuna.getFechaRefuerzo());
+
+              // 🔥 Recalcular estado automáticamente
+            if (vacuna.getFechaRefuerzo() != null) {
+                if (vacuna.getFechaRefuerzo().isBefore(LocalDate.now())) {
+                    vacuna.setEstado(EstadoVacuna.VENCIDO);
+                } else {
+                    vacuna.setEstado(EstadoVacuna.VIGENTE);
+                }
+}
 
             return vacunaDAO.save(existente);
         }
@@ -65,6 +86,20 @@ public class VacunaServiceImpl implements VacunaService {
 
      @Override
     public List<Vacuna> listarTodos() {
+
         return vacunaDAO.findAll();
+    }
+
+   @Override
+   public long Contarvencidas() {
+        return vacunaDAO.countByFechaRefuerzoBefore(LocalDate.now());
+   }
+
+   @Override
+    public long contarVencidasPorMedico(Long medicoId) {
+        return vacunaDAO.countByMedicoIdAndFechaRefuerzoBefore(
+            medicoId,
+            LocalDate.now()
+        );
     }
 }

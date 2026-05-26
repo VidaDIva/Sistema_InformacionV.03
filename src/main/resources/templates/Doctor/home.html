@@ -195,8 +195,8 @@
                         ❌ Tienes <span th:text="${vencidos}"></span> exámenes vencidos
                     </li>
 
-                    <li th:if="${vacunasPendientes > 0}" class="text-warning">
-                        💉 Vacunas pendientes
+                    <li th:if="${vacunasVencidas > 0}" class="text-warning">
+                        💉 Vacunas vencidas
                     </li>
 
                     <li th:if="${insumosBajos > 0}" class="text-warning">
@@ -280,7 +280,7 @@
                 </div>
             </div>
 
-            <h4 class="section-title">Centro de Gestión Médica</h4>
+            <h4 class="section-title">Seguridad y Salud para los Médicos</h4>
 
             <div class="row g-4">
 
@@ -317,7 +317,7 @@
                     <div class="card admin-card shadow-sm text-center">
 
                         <!-- 🟡 NOTIFICACIÓN VACUNAS -->
-                        <span th:if="${vacunasPendientes > 0}"
+                        <span th:if="${vacunasVencidas > 0}"
                             class="badge bg-warning position-absolute top-0 end-0 m-2 rounded-circle"
                             style="width: 25px; height: 25px; display:flex; align-items:center; justify-content:center;">
                             !

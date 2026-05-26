@@ -1,6 +1,7 @@
 package com.proyecto.Sistema_Informacion.Model.entity;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -199,4 +200,11 @@ public class PQRS {
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
     }
+
+    
+
+    public boolean isVencido() {
+    return "Pendiente".equals(this.estado) &&
+           ChronoUnit.DAYS.between(this.fechaIncidente, LocalDate.now()) > 7;
+}
 }

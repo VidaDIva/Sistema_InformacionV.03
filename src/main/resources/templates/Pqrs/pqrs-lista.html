@@ -96,20 +96,6 @@
                 </a>
             </div>
 
-            <!-- FILTROS -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <form th:action="@{/pqrs/estado/{estado}(estado='Pendiente')}" method="get">
-                        <button class="btn btn-outline-warning btn-sm">Pendientes</button>
-                    </form>
-                </div>
-
-                <div class="col-md-6 text-end">
-                    <form th:action="@{/pqrs/tipo/{tipo}(tipo='Queja')}" method="get">
-                        <button class="btn btn-outline-info btn-sm">Ver Quejas</button>
-                    </form>
-                </div>
-            </div>
 
             <!-- TABLA -->
             <div class="table-responsive">
@@ -137,9 +123,10 @@
                             <!-- Estado con color -->
                             <td>
                                 <span th:text="${pqrs.estado}" th:classappend="
-                                    ${pqrs.estado == 'Pendiente'} ? 'badge bg-warning' :
+                                    ${pqrs.vencido} ? 'badge bg-danger' :
+                                    (${pqrs.estado == 'Pendiente'} ? 'badge bg-warning' :
                                     (${pqrs.estado == 'En proceso'} ? 'badge bg-info' :
-                                    'badge bg-success')">
+                                    'badge bg-success'))">
                                 </span>
                             </td>
 

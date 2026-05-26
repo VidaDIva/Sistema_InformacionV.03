@@ -21,4 +21,8 @@ public interface VacunaService {
     List<Vacuna> proximas();
 
     List<Vacuna> listarTodos();
+
+    long  Contarvencidas();
+
+    long contarVencidasPorMedico(Long medicoId);
 }
