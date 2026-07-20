@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proyecto.Sistema_Informacion.Model.entity.Crear;
 import com.proyecto.Sistema_Informacion.Model.entity.PQRS;
+import com.proyecto.Sistema_Informacion.Model.service.EmailService;
 import com.proyecto.Sistema_Informacion.Model.service.PqrsService;
 
 import jakarta.servlet.http.HttpSession;
@@ -17,6 +18,14 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/pqrs")
 public class PqrsController {
+
+    private final EmailService emailService;
+    private final PqrsService pqrsService;
+
+    public PqrsController(PqrsService pqrsService, EmailService emailService) {
+        this.pqrsService = pqrsService;
+        this.emailService = emailService;
+    }
 
     // 📌 Responder PQRS (mostrar formulario de respuesta)
     @GetMapping("/responder/{id}")
@@ -33,11 +42,6 @@ public class PqrsController {
         return "redirect:/pqrs/lista";
     }
 
-    private final PqrsService pqrsService;
-
-    public PqrsController(PqrsService pqrsService) {
-        this.pqrsService = pqrsService;
-    }
 
     // 📌 Mostrar formulario PQRS
     @GetMapping("/formulario")
@@ -48,23 +52,24 @@ public class PqrsController {
     }
 
     // 📌 Guardar PQRS
-    @PostMapping("/guardar")
-    public String guardar(@ModelAttribute PQRS pqrs, HttpSession session) {
+@PostMapping("/guardar")
+public String guardar(@ModelAttribute PQRS pqrs,
+                      HttpSession session,
+                      org.springframework.web.servlet.mvc.support.RedirectAttributes flash) {
 
-        // Crear usuario = (Crear) session.getAttribute("usuario");
-        // if (usuario != null) {
-        //     pqrs.setNombre(usuario.getNombre());
-        //     pqrs.setCorreo(usuario.getCorreo());
-        //     pqrs.setTipoUsuario(usuario.getCargo().getCargo()); // ADMIN, PACIENTE...
-        // } else {
-        //     pqrs.setTipoUsuario("Anonimo");
-        // }
-        pqrs.setEstado("Pendiente");
+    pqrs.setEstado("Pendiente");
 
-        pqrsService.guardar(pqrs);
+    pqrsService.guardar(pqrs);
 
-        return "redirect:/ver-pqrs?ok";
+    if (pqrs.getCorreo() != null && !pqrs.getCorreo().isEmpty()) {
+        emailService.enviarCorreo(pqrs.getCorreo(), pqrs.getNombre());
     }
+
+    
+    flash.addFlashAttribute("success", true);
+
+    return "redirect:/pqrs/formulario";
+}
 
     // 📌 Listar PQRS
     @GetMapping("/lista")

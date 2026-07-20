@@ -1,15 +1,21 @@
 package com.proyecto.Sistema_Informacion.Controller;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -171,10 +177,10 @@ public String guardarDocumento(
         throw new RuntimeException("Debe seleccionar un archivo");
     }
 
-    // 🔥 Buscar la cita
+   
     Cita cita = citaService.buscarPorId(citaId);
 
-    // 🔥 Crear objeto documento
+   
     DocumentoMedico documentoMedico = new DocumentoMedico();
     documentoMedico.setPaciente(paciente);
     documentoMedico.setCita(cita);
@@ -184,11 +190,8 @@ public String guardarDocumento(
     documentoMedico.setEstado(EstadoDocumento.PENDIENTE);
     documentoMedico.setObservacion_medico("Sin revisión");
 
-    // =====================================================
-    // 🔥 GUARDAR ARCHIVO FÍSICO (ESTA ES LA PARTE CLAVE)
-    // =====================================================
 
-    // Nombre único
+
     String nombreLimpio = file.getOriginalFilename().replaceAll("\\s+", "_");
     String nombreArchivo = System.currentTimeMillis() + "_" + nombreLimpio;
 
@@ -202,17 +205,74 @@ public String guardarDocumento(
         Files.createDirectories(ruta.getParent());
     }
 
-    // Guardar archivo
     Files.write(ruta, file.getBytes());
 
-    // Guardar nombre en BD
     documentoMedico.setNombreArchivo(nombreArchivo);
 
-    // =====================================================
 
     documentoMedicoService.guardar(documentoMedico);
 
     return "redirect:/paciente/home";
+}
+
+@GetMapping("/ver-documento/{id}")
+public ResponseEntity<FileSystemResource> verDocumentoPaciente(
+        @PathVariable Long id,
+        HttpSession session) {
+
+    Crear paciente = (Crear) session.getAttribute("usuario");
+
+    if (paciente == null) {
+        return ResponseEntity.status(403).build();
+    }
+
+    DocumentoMedico doc = documentoMedicoService.buscarPorId(id);
+
+    // 🔒 Validar que el documento pertenece al paciente
+    if (doc == null || !doc.getPaciente().getId().equals(paciente.getId())) {
+        return ResponseEntity.status(403).build();
+    }
+
+    Path path = Paths.get(uploadArc)
+            .toAbsolutePath()
+            .resolve(doc.getNombreArchivo());
+
+    File archivo = path.toFile();
+
+    if (!archivo.exists()) {
+        return ResponseEntity.notFound().build();
+    }
+
+    try {
+        String tipo = Files.probeContentType(path);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=\"" + archivo.getName() + "\"")
+                .header(HttpHeaders.CONTENT_TYPE,
+                        tipo != null ? tipo : "application/octet-stream")
+                .body(new FileSystemResource(archivo));
+
+    } catch (Exception e) {
+        return ResponseEntity.internalServerError().build();
+    }
+}
+
+@GetMapping("/documentos")
+public String verDocumentosPaciente(Model model, HttpSession session) {
+
+    Crear paciente = (Crear) session.getAttribute("usuario");
+
+    if (paciente == null) {
+        return "redirect:/login";
+    }
+
+    List<DocumentoMedico> docs =
+        documentoMedicoService.buscarPorPaciente(paciente.getId());
+
+    model.addAttribute("documentos", docs);
+
+    return "paciente/documentos";
 }
 
 

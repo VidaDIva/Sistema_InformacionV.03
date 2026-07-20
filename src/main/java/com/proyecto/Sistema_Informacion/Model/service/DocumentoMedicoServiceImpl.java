@@ -57,4 +57,10 @@ implements DocumentoMedicoService {
     public List<DocumentoMedico> listarTodos() {
         return documentoDAO.findAll();
 }
+
+
+    @Override
+    public List<DocumentoMedico> buscarPorPaciente(Long id) {
+        return documentoDAO.findByPacienteId(id);
+    }
 }

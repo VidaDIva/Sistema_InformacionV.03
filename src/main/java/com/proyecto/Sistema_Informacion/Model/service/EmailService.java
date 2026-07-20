@@ -46,4 +46,19 @@ public class EmailService {
 
         return codigoGuardado.equals(codigoIngresado);
     }
+
+    public void enviarCorreo(String destino, String nombre) {
+
+        SimpleMailMessage mensaje = new SimpleMailMessage();
+        mensaje.setTo(destino);
+        mensaje.setSubject("PQRS recibida - SaludSync");
+        mensaje.setText(
+            "Hola " + nombre + ",\n\n" +
+            "Tu PQRS fue enviada correctamente.\n" +
+            "Será atendida en un plazo máximo de 4 días.\n\n" +
+            "Gracias por usar SaludSync."
+        );
+
+        mailSender.send(mensaje);
+    }
 }

@@ -30,18 +30,28 @@
         }
 
         .pendiente {
-            background: #fff3cd;
-            color: #856404;
+             background-color: #6c757d;
+             color: rgb(255, 255, 255);
         }
 
         .revisado {
-            background: #d1e7dd;
-            color: #0f5132;
+            background-color: rgb(211, 244, 255);
+             color: #6799e4;
+        }
+
+        .aprobado{
+            background-color:rgb(190, 242, 195) ;
+             color: #5ab872;
+        }
+
+        .rechazado{
+            color: rgb(255, 239, 239);
+            background-color: #cc4b58;
         }
 
         .examen {
-            background: #f8d7da;
-            color: #842029;
+            background-color: #ffc107;
+            color: #fefdf7;
         }
 
         .btn-ver {
@@ -98,6 +108,13 @@
 
                             <span th:if="${doc.estado.name()=='REQUIERE_EXAMEN'}" class="estado examen">
                                 Solicita examen
+                            </span>
+
+                            <span th:if="${doc.estado.name()=='APROBADO'}" class="estado aprobado">
+                                Aprobado
+                            </span>
+                             <span th:if="${doc.estado.name()=='RECHAZADO'}" class="estado rechazado">
+                                Rechazado
                             </span>
 
                         </td>
